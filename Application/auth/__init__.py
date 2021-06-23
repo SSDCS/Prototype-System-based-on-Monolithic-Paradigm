@@ -8,10 +8,6 @@ app = Flask(__name__) #creates a flask app
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db' #configure users database
 app.config['SECRET_KEY']='thisissupposedtobemysecret' #configure a secret key
 
-db = SQLAlchemy(app)# creates a database
-bcrypt=Bcrypt(app)# instatiate the bcrypt to help in hashing of passwords
-
-
 from my_app.forms import Login, Registration #importing forms
 from my_app.models import Astronaut, Admin #importing models
 blueprint=Blueprint("blueprint", __name__, static_folder="static", template_folder="templates") # creating a blueprint
