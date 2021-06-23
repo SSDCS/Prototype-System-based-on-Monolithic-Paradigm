@@ -10,7 +10,6 @@ app.config['SECRET_KEY']='thisissupposedtobemysecret' #configure a secret key
 
 db = SQLAlchemy(app)# creates a database
 bcrypt=Bcrypt(app)# instatiate the bcrypt to help in hashing of passwords
-db2 = SQLAlchemy(app)
 
 
 from my_app.forms import Login, Registration #importing forms
