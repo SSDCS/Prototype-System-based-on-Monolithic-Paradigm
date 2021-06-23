@@ -2,3 +2,4 @@ venv
 venv/
 .codio
 .vscode
+__pycache__
