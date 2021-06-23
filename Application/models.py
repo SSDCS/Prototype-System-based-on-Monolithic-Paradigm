@@ -1,4 +1,4 @@
-from my_app import db
+from Application import db
 
 #creating Astronaut database models or table to store the values of the fields named below.
 class Astronaut(db.Model):
@@ -21,5 +21,3 @@ class Admin(db.Model):
 
     def __repr__(self):
         return '<Admin %r>' % self.username
-
-db.create_all() #it actually creates the table on the database.
