@@ -26,20 +26,20 @@ def adminlogin_required(f):
             return f(*args, **kwargs)
         else:
             flash("You need to login first!")
-            return redirect(url_for("bp.adminlogin"))
+            return redirect(url_for("adminlogin"))
     return wrap
 
 @bp.route("/", methods=["POST", "GET"])
 def adminlogin():
     if "adminusername" in session:
-        return redirect(url_for('bp.admindashboard'))# this is for persistence purposes, if the user is logged in they should stay logged in.
+        return redirect(url_for('admindashboard'))# this is for persistence purposes, if the user is logged in they should stay logged in.
     form=Login(request.form) # create an instace of the login form
     if request.method == 'POST' and form.validate(): #if the method is post and the form validates
         admin=Admin.query.filter_by(username=form.username.data).first()#find the astronaut in the database
         if admin and bcrypt.check_password_hash(admin.password, form.password.data): #if the astronaut exists and the password hash matches the hash fro entered password
             session['adminusername']=form.username.data #add the user to session
             flash(f'Welcome {form.username.data}. You are now logged in.', 'success')
-            return redirect(request.args.get('next') or url_for('bp.admindashboard'))
+            return redirect(request.args.get('next') or url_for('admindashboard'))
         else:
             flash(f'Wrong password/email. Please try again.', 'danger')
     return render_template("admin/login.html", form=form, title="Login page")
@@ -60,7 +60,7 @@ def register():
         db.session.add(admin) #add data to the db
         db.session.commit() #commit the process for the actual save.
         flash(f'Welcome {form.username.data}. Thank you for registering.', 'success')
-        return redirect(url_for("bp.adminlogin"))
+        return redirect(url_for("adminlogin"))
     return render_template("admin/register.html", form=form)
 
 #this is for admin logout
@@ -69,7 +69,7 @@ def register():
 def logout():
     session.clear()
     flash("You have successfully logged out.")
-    return redirect(url_for("bp.adminlogin"))
+    return redirect(url_for("adminlogin"))
 
 
 #astromaut login page
