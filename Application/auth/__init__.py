@@ -2,11 +2,7 @@ from flask import Flask,render_template, url_for, session, request, redirect, fl
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from functools import wraps
-
-
-app = Flask(__name__) #creates a flask app
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db' #configure users database
-app.config['SECRET_KEY']='thisissupposedtobemysecret' #configure a secret key
+ 
 
 from my_app.forms import Login, Registration #importing forms
 from my_app.models import Astronaut, Admin #importing models
