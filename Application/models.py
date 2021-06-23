@@ -21,5 +21,3 @@ class Admin(db.Model):
 
     def __repr__(self):
         return '<Admin %r>' % self.username
-
-# db.create_all() #it actually creates the table on the database.
