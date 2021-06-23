@@ -7,6 +7,7 @@ from Application import bcrypt
 from Application.auth.forms import Login, Registration
 from Application.models import Admin, Astronaut
 from Application.auth import bp
+
 #decorator function to check if user baccessing certain paths are authenticated, if not they are taken back to login
 def login_required(f):
     @wraps(f)
@@ -26,20 +27,20 @@ def adminlogin_required(f):
             return f(*args, **kwargs)
         else:
             flash("You need to login first!")
-            return redirect(url_for("adminlogin"))
+            return redirect(url_for("blueprint.adminlogin"))
     return wrap
 
 @bp.route("/", methods=["POST", "GET"])
 def adminlogin():
     if "adminusername" in session:
-        return redirect(url_for('admindashboard'))# this is for persistence purposes, if the user is logged in they should stay logged in.
+        return redirect(url_for('blueprint.admindashboard'))# this is for persistence purposes, if the user is logged in they should stay logged in.
     form=Login(request.form) # create an instace of the login form
     if request.method == 'POST' and form.validate(): #if the method is post and the form validates
         admin=Admin.query.filter_by(username=form.username.data).first()#find the astronaut in the database
         if admin and bcrypt.check_password_hash(admin.password, form.password.data): #if the astronaut exists and the password hash matches the hash fro entered password
             session['adminusername']=form.username.data #add the user to session
             flash(f'Welcome {form.username.data}. You are now logged in.', 'success')
-            return redirect(request.args.get('next') or url_for('admindashboard'))
+            return redirect(request.args.get('next') or url_for('blueprint.admindashboard'))
         else:
             flash(f'Wrong password/email. Please try again.', 'danger')
     return render_template("admin/login.html", form=form, title="Login page")
@@ -60,7 +61,7 @@ def register():
         db.session.add(admin) #add data to the db
         db.session.commit() #commit the process for the actual save.
         flash(f'Welcome {form.username.data}. Thank you for registering.', 'success')
-        return redirect(url_for("adminlogin"))
+        return redirect(url_for("blueprint.adminlogin"))
     return render_template("admin/register.html", form=form)
 
 #this is for admin logout
@@ -69,11 +70,13 @@ def register():
 def logout():
     session.clear()
     flash("You have successfully logged out.")
-    return redirect(url_for("adminlogin"))
+    return redirect(url_for("blueprint.adminlogin"))
+
+app.register_blueprint(blueprint, url_prefix="/admin") #registering the blueprint to our app
 
 
 #astromaut login page
-@bp.route("/", methods=["POST", "GET"])
+@app.route("/", methods=["POST", "GET"])
 def astronautlogin():
     if "username" in session:
         return redirect(url_for('dashboard')) #for persistence purposes
@@ -89,12 +92,12 @@ def astronautlogin():
     return render_template("astronaut/login.html", form=form, title="Login page")
 
 #this route also should only be accessible to logged in astronaut
-@bp.route('/dashboard')
+@app.route('/dashboard')
 @login_required #applying the login decorator.
 def dashboard():
     return "<h1>Welcome to dashboard</h1>"
 
-@bp.route("/register", methods=["POST", "GET"])
+@app.route("/register", methods=["POST", "GET"])
 def register():
     form=Registration(request.form) #create an instace of the Registration form
     if request.method == 'POST' and form.validate(): # if the request method is post 
@@ -107,7 +110,7 @@ def register():
     return render_template("astronaut/register.html", form=form)
 
 #astronaut logout route
-@bp.route("/logout")
+@app.route("/logout")
 @login_required #applying the login decorator.
 def logout():
     session.clear() #clear the session values
