@@ -1,4 +1,4 @@
-from flask import Flask,render_template, url_for, session, request, redirect, flash
+from flask import Flask, render_template, url_for, session, request, redirect, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from functools import wraps
@@ -8,7 +8,9 @@ from Application.auth.forms import Login, Registration
 from Application.models import Admin, Astronaut
 from Application.auth import bp
 
-#decorator function to check if user baccessing certain paths are authenticated, if not they are taken back to login
+# decorator function to check if user baccessing certain paths are authenticated, if not they are taken back to login
+
+
 def login_required(f):
     @wraps(f)
     def wrap(*args, **kwargs):
@@ -19,60 +21,77 @@ def login_required(f):
             return redirect(url_for("blueprint.login"))
     return wrap
 
-user=""
-#astromaut login page
+
+user = ""
+# astromaut login page
+
+
 @bp.route("/", methods=["POST", "GET"])
 def login():
     global user
     if "username" in session:
-        return redirect(url_for('blueprint.dashboard')) #for persistence purposes
-    form=Login(request.form) # create an instace of the login form
-    if request.method == 'POST' and form.validate(): #if the method is post and the form validates
-        admin=Admin.query.filter_by(username=form.username.data).first()
-        astronaut=Astronaut.query.filter_by(username=form.username.data).first()#find the astronaut in the database
-        if astronaut and bcrypt.check_password_hash(astronaut.password, form.password.data): #if the astronaut exists and the password hash matches the hash fro entered password
-            user="astronaut"
-            session['username']=form.username.data #add the user to session
+        # for persistence purposes
+        return redirect(url_for('blueprint.dashboard'))
+    form = Login(request.form)  # create an instace of the login form
+    if request.method == 'POST' and form.validate():  # if the method is post and the form validates
+        admin = Admin.query.filter_by(username=form.username.data).first()
+        # find the astronaut in the database
+        astronaut = Astronaut.query.filter_by(
+            username=form.username.data).first()
+        # if the astronaut exists and the password hash matches the hash fro entered password
+        if astronaut and bcrypt.check_password_hash(astronaut.password, form.password.data):
+            user = "astronaut"
+            session['username'] = form.username.data  # add the user to session
             return redirect(request.args.get('next') or url_for('blueprint.dashboard'))
         elif admin and admin and bcrypt.check_password_hash(admin.password, form.password.data):
-            user="admin"
-            session['username']=form.username.data #add the user to session
+            user = "admin"
+            session['username'] = form.username.data  # add the user to session
             return redirect(request.args.get('next') or url_for('blueprint.dashboard'))
         else:
             flash(f'Wrong password/email. Please try again.', 'danger')
     return render_template("login.html", form=form, title="Login page")
 
-#this route also should only be accessible to logged in astronaut
+# this route also should only be accessible to logged in astronaut
+
+
 @bp.route('/dashboard')
-@login_required #applying the login decorator.
+@login_required  # applying the login decorator.
 def dashboard():
     return render_template("dashboard.html", user=user)
+
 
 @bp.route("/register", methods=["POST", "GET"])
 @login_required
 def register():
-    form=Registration(request.form) #create an instace of the Registration form
-    if request.method == 'POST' and form.validate(): # if the request method is post 
-        hashedpass=bcrypt.generate_password_hash(form.password.data)#encrypt the password
+    # create an instace of the Registration form
+    form = Registration(request.form)
+    if request.method == 'POST' and form.validate():  # if the request method is post
+        hashedpass = bcrypt.generate_password_hash(
+            form.password.data)  # encrypt the password
         if form.role.data == 'admin':
-            admin = Admin(name=form.name.data, username=form.username.data, email=form.email.data, password=hashedpass)
-            db.session.add(admin) #add to db
-            db.session.commit() #commit the process for the actual save.
+            admin = Admin(name=form.name.data, username=form.username.data,
+                          email=form.email.data, password=hashedpass)
+            db.session.add(admin)  # add to db
+            db.session.commit()  # commit the process for the actual save.
             flash(f'Admin {form.username.data} registered!', 'success')
             return redirect(url_for("blueprint.login"))
         else:
-            hashedpass=bcrypt.generate_password_hash(form.password.data)#encrypt the password
-            astronaut = Astronaut(name=form.name.data, username=form.username.data, email=form.email.data, password=hashedpass, admin_id=session['username'])
-            db.session.add(astronaut) #add to db
-            db.session.commit() #commit the process for the actual save.
+            hashedpass = bcrypt.generate_password_hash(
+                form.password.data)  # encrypt the password
+            astronaut = Astronaut(name=form.name.data, username=form.username.data,
+                                  email=form.email.data, password=hashedpass, admin_id=session['username'])
+            db.session.add(astronaut)  # add to db
+            db.session.commit()  # commit the process for the actual save.
             flash(f'Astronuat {form.username.data} registered!', 'success')
-            return redirect(url_for("blueprint.login"))        
+            return redirect(url_for("blueprint.login"))
     return render_template("register.html", form=form)
 
-#astronaut logout route
+# astronaut logout route
+
+
 @bp.route("/logout")
-@login_required #applying the login decorator.
+@login_required  # applying the login decorator.
 def logout():
-    session.clear() #clear the session values
+    session.clear()  # clear the session values
     flash("You have successfully logged out.")
-    return redirect(url_for("blueprint.login")) #then redirecting to login
+    return redirect(url_for("blueprint.login"))  # then redirecting to login
