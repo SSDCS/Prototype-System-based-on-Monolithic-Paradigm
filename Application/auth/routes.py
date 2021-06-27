@@ -43,11 +43,11 @@ def login():
         if astronaut and bcrypt.check_password_hash(astronaut.password, form.password.data):
             user = "astronaut"
             session['username'] = form.username.data  # add the user to session
-            return redirect(request.args.get('next') or url_for('dashboard.index'))
+            return redirect(request.args.get('next') or url_for('dashboard'))
         elif admin and admin and bcrypt.check_password_hash(admin.password, form.password.data):
             user = "admin"
             session['username'] = form.username.data  # add the user to session
-            return redirect(request.args.get('next') or url_for('dashboard.index'))
+            return redirect(request.args.get('next') or url_for('dashboard'))
         else:
             flash(f'Wrong password/email. Please try again.', 'danger')
     return render_template("login.html", form=form, title="Login page")
