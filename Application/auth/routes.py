@@ -7,6 +7,7 @@ from Application import bcrypt
 from Application.auth.forms import Login, Registration
 from Application.models import Admin, Astronaut
 from Application.auth import bp
+from ..decorators import login_required
 
 # decorator function to check if user baccessing certain paths are authenticated, if not they are taken back to login
 
