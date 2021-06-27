@@ -1,5 +1,5 @@
 from flask import Blueprint
 
-bp = Blueprint('engineering', __name__)
+bp = Blueprint('oxygen', __name__)
 
-from Application.engineering import routes
+from Application.oxygen import routes
