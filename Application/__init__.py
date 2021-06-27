@@ -21,3 +21,5 @@ def create_app(config_class=Config):
     app.register_blueprint(dashboard_bp)
 
     return app
+
+    from Application import models
