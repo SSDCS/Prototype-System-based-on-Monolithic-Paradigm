@@ -32,7 +32,7 @@ def login():
     global user
     if "username" in session:
         # for persistence purposes
-        return redirect(url_for('dashboard.'))
+        return redirect(url_for('dashboard.index'))
     form = Login(request.form)  # create an instace of the login form
     if request.method == 'POST' and form.validate():  # if the method is post and the form validates
         admin = Admin.query.filter_by(username=form.username.data).first()
@@ -43,11 +43,11 @@ def login():
         if astronaut and bcrypt.check_password_hash(astronaut.password, form.password.data):
             user = "astronaut"
             session['username'] = form.username.data  # add the user to session
-            return redirect(request.args.get('next') or url_for('dashboard.'))
+            return redirect(request.args.get('next') or url_for('dashboard.index'))
         elif admin and admin and bcrypt.check_password_hash(admin.password, form.password.data):
             user = "admin"
             session['username'] = form.username.data  # add the user to session
-            return redirect(request.args.get('next') or url_for('dashboard.'))
+            return redirect(request.args.get('next') or url_for('dashboard.index'))
         else:
             flash(f'Wrong password/email. Please try again.', 'danger')
     return render_template("login.html", form=form, title="Login page")
