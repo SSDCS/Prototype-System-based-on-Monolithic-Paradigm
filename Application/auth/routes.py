@@ -11,15 +11,15 @@ from Application.auth import bp
 # decorator function to check if user baccessing certain paths are authenticated, if not they are taken back to login
 
 
-def login_required(f):
-    @wraps(f)
-    def wrap(*args, **kwargs):
-        if "username" in session:
-            return f(*args, **kwargs)
-        else:
-            flash("You need to login first!")
-            return redirect(url_for("auth.login"))
-    return wrap
+# def login_required(f):
+#     @wraps(f)
+#     def wrap(*args, **kwargs):
+#         if "username" in session:
+#             return f(*args, **kwargs)
+#         else:
+#             flash("You need to login first!")
+#             return redirect(url_for("auth.login"))
+#     return wrap
 
 
 user = ""
@@ -54,10 +54,10 @@ def login():
 # this route also should only be accessible to logged in astronaut
 
 
-@bp.route('/dashboard')
-@login_required  # applying the login decorator.
-def dashboard():
-    return render_template("dashboard.html", user=user)
+# @bp.route('/dashboard')
+# @login_required  # applying the login decorator.
+# def dashboard():
+#     return render_template("dashboard.html", user=user)
 
 
 @bp.route("/register", methods=["POST", "GET"])
