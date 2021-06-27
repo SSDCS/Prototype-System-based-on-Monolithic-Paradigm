@@ -1,0 +1,63 @@
+.admin_container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-top: 60px;
+}
+.card {
+  width: 330px;
+  height: 220px;
+  box-shadow: 1px 1px 4px 2px #c2e2e1;
+  margin: 10px;
+  cursor: pointer;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 10px;
+}
+.cards_wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.container1 {
+  display: flex;
+  justify-content: center;
+}
+.heading {
+  color: #209b97;
+  font-size: 23px;
+  margin: 10px;
+}
+.reading {
+  border: 1px solid #209b97;
+  padding: 10px;
+  margin: 10px;
+}
+.val {
+  color: #209b97;
+  font-size: 14px;
+}
+.r_val {
+  color: #a22929;
+  font-size: 18px;
+}
+.activate {
+  text-decoration: none;
+  background: #209b97;
+  color: #fff;
+  padding: 10px 15px;
+  text-align: center;
+}
+.activate:hover {
+  text-decoration: none;
+  background: #05413f;
+  color: #fff;
+  transition: 1ms ease-in-out;
+}
+.btn_wrapper {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px;
+}
