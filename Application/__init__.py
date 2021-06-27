@@ -22,4 +22,4 @@ def create_app(config_class=Config):
 
     return app
 
-    from Application import models
+from Application import models
