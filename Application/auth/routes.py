@@ -94,4 +94,4 @@ def register():
 def logout():
     session.clear()  # clear the session values
     flash("You have successfully logged out.")
-    return redirect(url_for("blueprint.login"))  # then redirecting to login
+    return redirect(url_for("auth.login"))  # then redirecting to login
