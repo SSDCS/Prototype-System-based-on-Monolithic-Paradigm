@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from config import Config
 
-db = SQLAlchemy()  # creates a database
+db = SQLAlchemy()  # instantiates the SQLAlchemy object
 bcrypt = Bcrypt()  # instatiate the bcrypt to help in hashing of passwords
 
 
