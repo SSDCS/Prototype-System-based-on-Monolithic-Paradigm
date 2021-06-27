@@ -1,6 +1,8 @@
 from Application import db
 
-#creating Astronaut database models or table to store the values of the fields named below.
+# creating Astronaut database models or table to store the values of the fields named below.
+
+
 class Astronaut(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(30))
@@ -8,10 +10,16 @@ class Astronaut(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(180), unique=False, nullable=False)
 
+    admin_id = db.Column(db.Integer, db.ForeignKey('admin.id'), nullable=False)
+    # astronauts need to have the admin ID's that created them
+    admin = db.relationship('Admin', backref=db.backref('admins'))
+
     def __repr__(self):
         return '<Astronaut %r>' % self.username
 
-#creating Astronaut database models or table to store the values of the fields named below.
+# creating Astronaut database models or table to store the values of the fields named below.
+
+
 class Admin(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(30))
@@ -21,3 +29,6 @@ class Admin(db.Model):
 
     def __repr__(self):
         return '<Admin %r>' % self.username
+
+
+db.create_all()  # it actually creates the table on the database.
