@@ -18,7 +18,7 @@ def login_required(f):
             return f(*args, **kwargs)
         else:
             flash("You need to login first!")
-            return redirect(url_for("blueprint.login"))
+            return redirect(url_for("auth.login"))
     return wrap
 
 
@@ -31,7 +31,7 @@ def login():
     global user
     if "username" in session:
         # for persistence purposes
-        return redirect(url_for('blueprint.dashboard'))
+        return redirect(url_for('auth.dashboard'))
     form = Login(request.form)  # create an instace of the login form
     if request.method == 'POST' and form.validate():  # if the method is post and the form validates
         admin = Admin.query.filter_by(username=form.username.data).first()
@@ -42,11 +42,11 @@ def login():
         if astronaut and bcrypt.check_password_hash(astronaut.password, form.password.data):
             user = "astronaut"
             session['username'] = form.username.data  # add the user to session
-            return redirect(request.args.get('next') or url_for('blueprint.dashboard'))
+            return redirect(request.args.get('next') or url_for('auth.dashboard'))
         elif admin and admin and bcrypt.check_password_hash(admin.password, form.password.data):
             user = "admin"
             session['username'] = form.username.data  # add the user to session
-            return redirect(request.args.get('next') or url_for('blueprint.dashboard'))
+            return redirect(request.args.get('next') or url_for('auth.dashboard'))
         else:
             flash(f'Wrong password/email. Please try again.', 'danger')
     return render_template("login.html", form=form, title="Login page")
@@ -74,7 +74,7 @@ def register():
             db.session.add(admin)  # add to db
             db.session.commit()  # commit the process for the actual save.
             flash(f'Admin {form.username.data} registered!', 'success')
-            return redirect(url_for("blueprint.login"))
+            return redirect(url_for("auth.login"))
         else:
             hashedpass = bcrypt.generate_password_hash(
                 form.password.data)  # encrypt the password
@@ -83,7 +83,7 @@ def register():
             db.session.add(astronaut)  # add to db
             db.session.commit()  # commit the process for the actual save.
             flash(f'Astronuat {form.username.data} registered!', 'success')
-            return redirect(url_for("blueprint.login"))
+            return redirect(url_for("auth.login"))
     return render_template("register.html", form=form)
 
 # astronaut logout route
