@@ -31,4 +31,4 @@ class Admin(db.Model):
         return '<Admin %r>' % self.username
 
 
-db.create_all()  # it actually creates the table on the database.
+# db.create_all()  # it actually creates the table on the database.
