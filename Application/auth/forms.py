@@ -1,4 +1,4 @@
-from wtforms import Form, PasswordField, validators, SubmitField, StringField
+from wtforms import Form, PasswordField, validators, SubmitField, StringField, SelectField
 
 # using wtforms to create registration and login forms
 
