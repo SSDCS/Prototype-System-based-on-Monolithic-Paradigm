@@ -13,7 +13,7 @@ temperature_producer = KafkaProducer(bootstrap_servers=['localhost:9092'],
 
 if __name__ == "__main__":
     while 1 == 1:
-        registered_user = generate_temperature()
-        print(registered_user)
+        temperature = generate_temperature()
+        print(temperature)
         temperature_producer.send("temperature", registered_user)
         time.sleep(1)
