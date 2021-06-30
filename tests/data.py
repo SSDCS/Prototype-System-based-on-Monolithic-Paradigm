@@ -8,3 +8,7 @@ def generate_temperature():
         "id": datetime.datetime.now(),
         "temperature:": temperature
     }
+
+
+if __name__ == "__main__":
+    print(generate_temperature())
