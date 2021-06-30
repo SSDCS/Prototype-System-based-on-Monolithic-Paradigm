@@ -15,5 +15,5 @@ if __name__ == "__main__":
     while 1 == 1:
         temperature = generate_temperature()
         print(temperature)
-        temperature_producer.send("temperature", registered_user)
+        temperature_producer.send("temperature", temperature)
         time.sleep(1)
