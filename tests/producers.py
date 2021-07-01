@@ -1,3 +1,6 @@
+"""
+This is a producer that generates a temperature
+"""
 from kafka import KafkaProducer
 import json
 from data import generate_temperature
