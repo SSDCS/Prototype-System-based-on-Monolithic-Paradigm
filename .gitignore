@@ -3,3 +3,4 @@ venv/
 .codio
 .vscode
 __pycache__
+.idea
