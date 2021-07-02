@@ -47,6 +47,14 @@ def login():
 @bp.route("/register", methods=["POST", "GET"])
 @login_required
 def register():
+    """ This function is used to register new users
+
+    Args:
+        None.
+
+    Returns:
+        register.html
+    """
     # create an instace of the Registration form
     form = Registration(request.form)
     if request.method == 'POST' and form.validate():  # if the request method is post
