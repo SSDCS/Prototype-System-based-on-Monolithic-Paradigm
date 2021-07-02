@@ -77,6 +77,14 @@ def register():
 @bp.route("/logout")
 @login_required  # applying the login decorator.
 def logout():
+    """ This function is used to terminate the session cookie
+
+    Args:
+        None
+
+    Returns:
+        auth.login route which propts user to login
+    """
     session.clear()  # clear the session values
     flash("You have successfully logged out.")
     return redirect(url_for("auth.login"))  # then redirecting to login
