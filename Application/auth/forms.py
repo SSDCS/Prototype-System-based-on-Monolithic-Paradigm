@@ -28,5 +28,13 @@ class Registration(Form):
 
 
 class Login(Form):
+    """ Defines the form used for user login
+
+    Args:
+        Form: Inherits the form functions from the wtforms library
+
+    Returns:
+        None
+    """
     username = StringField("Username:", [validators.DataRequired()])
     password = PasswordField('Your Password', [validators.DataRequired()])
