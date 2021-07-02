@@ -3,9 +3,14 @@ Temperature
 """
 from flask import render_template
 from Application.temperature import bp
+from tests import consumers
 
-
-@bp.route('/', methods=['GET', 'POST'])
-@bp.route('/index', methods=['GET', 'POST'])
-def index():
-    return render_template('index.html')
+#@bp.route('/')
+#def show_temp():
+#    return render_template('templates/temperature.html')
+@bp.route('/temperature', methods=['GET', 'POST'])
+def temperature1():
+    return render_template('templates/temperature.html')
+@bp.route('/temperature/<value>', methods=['GET', 'POST'])
+def temperature2(value):
+    return "Temperature is: "+value
