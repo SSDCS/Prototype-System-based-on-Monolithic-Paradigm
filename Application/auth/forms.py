@@ -10,7 +10,7 @@ class Registration(Form):
     Args:
         Form: Inherits the wtf form libary
 
-    Returns: 
+    Returns:
         None
     """
     name = StringField("Name:")
