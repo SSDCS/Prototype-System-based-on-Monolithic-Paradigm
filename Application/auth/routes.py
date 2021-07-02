@@ -15,6 +15,15 @@ from ..decorators import login_required
 
 @bp.route("/", methods=["POST", "GET"])
 def login():
+    """ This function is reposible for all login requests
+    Args:
+        None
+    
+    Returns:
+        ON GET: 
+            If: user is not logged in return login.html
+            Else: return dashboard.index
+    """
     if "username" in session:
         # for persistence purposes
         return redirect(url_for('dashboard.index'))
