@@ -1,9 +1,18 @@
+"""
+Login and Registrationn forms
+"""
 from wtforms import Form, PasswordField, validators, SubmitField, StringField, SelectField
-
-# using wtforms to create registration and login forms
 
 
 class Registration(Form):
+    """ Defines the registration form
+
+    Args:
+        Form: Inherits the wtf form libary
+
+    Returns:
+        None
+    """
     name = StringField("Name:")
     username = StringField("Username:", [validators.DataRequired()])
     email = StringField('Email Address:', [
@@ -19,5 +28,13 @@ class Registration(Form):
 
 
 class Login(Form):
+    """ Defines the form used for user login
+
+    Args:
+        Form: Inherits the form functions from the wtforms library
+
+    Returns:
+        None
+    """
     username = StringField("Username:", [validators.DataRequired()])
     password = PasswordField('Your Password', [validators.DataRequired()])
