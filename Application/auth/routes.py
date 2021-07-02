@@ -15,7 +15,7 @@ def login():
     """ This function is reposible for all login requests
     Args:
         None
-    
+
     Returns:
         ON GET:
             If: user is not logged in return login.html
