@@ -40,7 +40,7 @@ def login():
             session['username'] = form.username.data  # add the user to session
             return redirect(request.args.get('next') or url_for('dashboard.index'))
         else:
-            flash(f'Wrong password/email. Please try again.', 'danger')
+            flash('Wrong password/email. Please try again.', 'danger')
     return render_template("login.html", form=form, title="Login page")
 
 
