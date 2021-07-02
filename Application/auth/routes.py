@@ -9,22 +9,9 @@ from Application.models import Admin, Astronaut
 from Application.auth import bp
 from ..decorators import login_required
 
-# decorator function to check if user baccessing certain paths are authenticated, if not they are taken back to login
-
-
-# def login_required(f):
-#     @wraps(f)
-#     def wrap(*args, **kwargs):
-#         if "username" in session:
-#             return f(*args, **kwargs)
-#         else:
-#             flash("You need to login first!")
-#             return redirect(url_for("auth.login"))
-#     return wrap
-
-
-
 # astromaut login page
+
+
 @bp.route("/", methods=["POST", "GET"])
 def login():
     if "username" in session:
@@ -34,27 +21,20 @@ def login():
     if request.method == 'POST' and form.validate():  # if the method is post and the form validates
         admin = Admin.query.filter_by(username=form.username.data).first()
         # find the astronaut in the database
-        astronaut = Astronaut.query.filter_by(username=form.username.data).first()
+        astronaut = Astronaut.query.filter_by(
+            username=form.username.data).first()
         # if the astronaut exists and the password hash matches the hash fro entered password
         if astronaut and bcrypt.check_password_hash(astronaut.password, form.password.data):
-            session['myuser']="astronaut"
+            session['myuser'] = "astronaut"
             session['username'] = form.username.data  # add the user to session
             return redirect(request.args.get('next') or url_for('dashboard.index'))
         elif admin and bcrypt.check_password_hash(admin.password, form.password.data):
-            session['myuser']="admin"
+            session['myuser'] = "admin"
             session['username'] = form.username.data  # add the user to session
             return redirect(request.args.get('next') or url_for('dashboard.index'))
         else:
             flash(f'Wrong password/email. Please try again.', 'danger')
     return render_template("login.html", form=form, title="Login page")
-
-# this route also should only be accessible to logged in astronaut
-
-
-# @bp.route('/dashboard')
-# @login_required  # applying the login decorator.
-# def dashboard():
-#     return render_template("dashboard.html", user=user)
 
 
 @bp.route("/register", methods=["POST", "GET"])
