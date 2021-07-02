@@ -1,6 +1,7 @@
+""" 
+Login and Registrationn forms
+"""
 from wtforms import Form, PasswordField, validators, SubmitField, StringField, SelectField
-
-# using wtforms to create registration and login forms
 
 
 class Registration(Form):
