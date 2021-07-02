@@ -23,13 +23,10 @@ from ..decorators import login_required
 #     return wrap
 
 
-user = ""
+
 # astromaut login page
-
-
 @bp.route("/", methods=["POST", "GET"])
 def login():
-    global user
     if "username" in session:
         # for persistence purposes
         return redirect(url_for('dashboard.index'))
@@ -37,15 +34,14 @@ def login():
     if request.method == 'POST' and form.validate():  # if the method is post and the form validates
         admin = Admin.query.filter_by(username=form.username.data).first()
         # find the astronaut in the database
-        astronaut = Astronaut.query.filter_by(
-            username=form.username.data).first()
+        astronaut = Astronaut.query.filter_by(username=form.username.data).first()
         # if the astronaut exists and the password hash matches the hash fro entered password
         if astronaut and bcrypt.check_password_hash(astronaut.password, form.password.data):
-            user = "astronaut"
+            session['myuser']="astronaut"
             session['username'] = form.username.data  # add the user to session
             return redirect(request.args.get('next') or url_for('dashboard.index'))
-        elif admin and admin and bcrypt.check_password_hash(admin.password, form.password.data):
-            user = "admin"
+        elif admin and bcrypt.check_password_hash(admin.password, form.password.data):
+            session['myuser']="admin"
             session['username'] = form.username.data  # add the user to session
             return redirect(request.args.get('next') or url_for('dashboard.index'))
         else:
