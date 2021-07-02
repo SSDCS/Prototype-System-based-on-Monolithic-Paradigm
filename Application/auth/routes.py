@@ -54,7 +54,8 @@ def register():
             hashedpass = bcrypt.generate_password_hash(
                 form.password.data)  # encrypt the password
             astronaut = Astronaut(name=form.name.data, username=form.username.data,
-                                  email=form.email.data, password=hashedpass, admin_id=session['username'])
+                                  email=form.email.data, password=hashedpass,
+                                  admin_id=session['username'])
             db.session.add(astronaut)  # add to db
             db.session.commit()  # commit the process for the actual save.
             flash(f'Astronuat {form.username.data} registered!', 'success')
