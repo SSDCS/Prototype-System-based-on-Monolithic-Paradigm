@@ -17,7 +17,7 @@ def login():
         None
     
     Returns:
-        ON GET: 
+        ON GET:
             If: user is not logged in return login.html
             Else: return dashboard.index
     """
