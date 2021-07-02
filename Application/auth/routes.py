@@ -18,7 +18,7 @@ def login():
     if "username" in session:
         # for persistence purposes
         return redirect(url_for('dashboard.index'))
-    form = Login(request.form)  # create an instace of the login form
+    form = Login(request.form) # create an instace of the login form
     if request.method == 'POST' and form.validate():  # if the method is post and the form validates
         admin = Admin.query.filter_by(username=form.username.data).first()
         # find the astronaut in the database
