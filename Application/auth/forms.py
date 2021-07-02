@@ -1,4 +1,4 @@
-""" 
+"""
 Login and Registrationn forms
 """
 from wtforms import Form, PasswordField, validators, SubmitField, StringField, SelectField
