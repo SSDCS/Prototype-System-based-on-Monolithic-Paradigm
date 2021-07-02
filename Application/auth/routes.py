@@ -9,8 +9,6 @@ from Application.models import Admin, Astronaut
 from Application.auth import bp
 from ..decorators import login_required
 
-# astromaut login page
-
 
 @bp.route("/", methods=["POST", "GET"])
 def login():
