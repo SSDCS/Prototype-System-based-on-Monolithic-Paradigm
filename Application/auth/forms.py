@@ -5,6 +5,14 @@ from wtforms import Form, PasswordField, validators, SubmitField, StringField, S
 
 
 class Registration(Form):
+    """ Defines the registration form
+
+    Args:
+        Form: Inherits the wtf form libary
+
+    Returns: 
+        None
+    """
     name = StringField("Name:")
     username = StringField("Username:", [validators.DataRequired()])
     email = StringField('Email Address:', [
