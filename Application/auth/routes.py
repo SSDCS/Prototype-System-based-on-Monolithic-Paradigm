@@ -2,7 +2,6 @@
 Authentication routes 
 """
 from flask import Flask, render_template, url_for, session, request, redirect, flash
-from flask_sqlalchemy import SQLAlchemy
 from Application import db
 from Application import bcrypt
 from Application.auth.forms import Login, Registration
