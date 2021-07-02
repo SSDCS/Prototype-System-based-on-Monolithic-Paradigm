@@ -1,7 +1,7 @@
 """
 Authentication routes 
 """
-from flask import Flask, render_template, url_for, session, request, redirect, flash
+from flask import render_template, url_for, session, request, redirect, flash
 from Application import db
 from Application import bcrypt
 from Application.auth.forms import Login, Registration
