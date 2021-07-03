@@ -1,7 +1,20 @@
 {% extends "layout.html"%} {%block content%}
-{% for i in consumer %}
-    {}
-<div>
+<script>
+    let alert=false;
+    if (!!window.EventSource) {
+      var source = new EventSource('/temperature');
+      source.onmessage = function(e) {
+        $("#data").text(e.data);
+        if(parseInt(e.data) >= 21)
+            //alert = true;
+            $("#alert").text("TEMPERATURE TOO HIGH");
+        //if(alert)
+        //$("#alert").text("TEMPERATURE TOO HIGH");
+      }
+    }
     
-</div>
-{%endblock content%}
+    </script>
+    Temperature:<br>
+    <div id="data">No temperature readings</div>
+    <div id="alert"></div>
+{%endblock%}
