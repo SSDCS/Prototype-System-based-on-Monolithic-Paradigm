@@ -6,10 +6,9 @@
       source.onmessage = function(e) {
         $("#data").text(e.data);
         if(parseInt(e.data) >= 21)
-            //alert = true;
             $("#alert").text("TEMPERATURE TOO HIGH");
-        //if(alert)
-        //$("#alert").text("TEMPERATURE TOO HIGH");
+        else
+            $("#alert").text("");
       }
     }
     
