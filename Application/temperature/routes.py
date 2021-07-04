@@ -12,9 +12,6 @@ import json
 # consumer = KafkaConsumer('temperature', bootstrap_servers=['localhost:9092'])
 
 
-# @bp.route('/')
-# def show_temp():
-#    return render_template('templates/temperature.html')
 @bp.route('/temperature', methods=['GET', 'POST'])
 def temperature1():
     if request.headers.get('accept') == 'text/event-stream':
