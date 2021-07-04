@@ -30,6 +30,10 @@ db.create_all()
 import populateDB
 ```
 
+```Flask Shell
+exit()
+```
+
 ## Unix
 
 ```Terminal
@@ -54,4 +58,8 @@ db.create_all()
 
 ```Flask Shell
 import populateDB
+```
+
+```Flask Shell
+exit()
 ```
