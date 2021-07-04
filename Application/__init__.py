@@ -1,10 +1,12 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
+from argon2 import PasswordHasher
 from config import Config
 
 db = SQLAlchemy()  # instantiates the SQLAlchemy object
 bcrypt = Bcrypt()  # instatiate the bcrypt to help in hashing of passwords
+ph = PasswordHasher() # instantiate the argon2 password hashinng algorithm
 
 
 def create_app(config_class=Config):
