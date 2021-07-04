@@ -3,7 +3,6 @@ Authentication routes
 """
 from flask import render_template, url_for, session, request, redirect, flash
 from Application import db
-from Application import bcrypt
 from Application import ph
 from Application.auth.forms import Login, Registration
 from Application.models import Admin, Astronaut
