@@ -13,7 +13,7 @@ def create_app(config_class=Config):
     app.config.from_object(config_class)
 
     db.init_app(app)
-    bcrypt.init_app(app)
+    ph.init_app(app)
 
     from Application.auth import bp as auth_bp
     app.register_blueprint(auth_bp, url_prefix='/auth')
