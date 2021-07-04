@@ -9,15 +9,9 @@ from kafka import KafkaConsumer
 import json
 
 
-consumer = KafkaConsumer('temperature',bootstrap_servers=['localhost:9092'])
+consumer = KafkaConsumer('temperature', bootstrap_servers=['127.0.0.1:9092'])
 
-    
-        
-    
 
-#@bp.route('/')
-#def show_temp():
-#    return render_template('templates/temperature.html')
 @bp.route('/temperature', methods=['GET', 'POST'])
 def temperature1():
     if request.headers.get('accept') == 'text/event-stream':
@@ -25,10 +19,11 @@ def temperature1():
             for msg in consumer:
                 val = json.loads(msg.value)
                 yield "data: %d\n\n" % (val["temperature:"])
-                #time.sleep(.1)  # an artificial delay
+                # time.sleep(.1)  # an artificial delay
         return Response(events(), content_type='text/event-stream')
     redirect('/temperature')
     return render_template('temperature.html')
+
 
 @bp.route('/temperature/<value>', methods=['GET', 'POST'])
 def temperature2(value):

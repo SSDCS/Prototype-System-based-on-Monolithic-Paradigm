@@ -1,10 +1,10 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from flask_bcrypt import Bcrypt
+from argon2 import PasswordHasher
 from config import Config
 
 db = SQLAlchemy()  # instantiates the SQLAlchemy object
-bcrypt = Bcrypt()  # instatiate the bcrypt to help in hashing of passwords
+ph = PasswordHasher() # instantiate the argon2 password hashinng algorithm
 
 
 def create_app(config_class=Config):
@@ -12,7 +12,6 @@ def create_app(config_class=Config):
     app.config.from_object(config_class)
 
     db.init_app(app)
-    bcrypt.init_app(app)
 
     from Application.auth import bp as auth_bp
     app.register_blueprint(auth_bp, url_prefix='/auth')

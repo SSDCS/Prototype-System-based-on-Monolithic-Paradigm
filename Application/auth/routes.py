@@ -3,7 +3,7 @@ Authentication routes
 """
 from flask import render_template, url_for, session, request, redirect, flash
 from Application import db
-from Application import bcrypt
+from Application import ph
 from Application.auth.forms import Login, Registration
 from Application.models import Admin, Astronaut
 from Application.auth import bp
@@ -31,11 +31,11 @@ def login():
         astronaut = Astronaut.query.filter_by(
             username=form.username.data).first()
         # if the astronaut exists and the password hash matches the hash fro entered password
-        if astronaut and bcrypt.check_password_hash(astronaut.password, form.password.data):
+        if astronaut and ph.verify(astronaut.password, form.password.data):
             session['myuser'] = "astronaut"
             session['username'] = form.username.data  # add the user to session
             return redirect(request.args.get('next') or url_for('dashboard.index'))
-        elif admin and bcrypt.check_password_hash(admin.password, form.password.data):
+        elif admin and ph.verify(admin.password, form.password.data):
             session['myuser'] = "admin"
             session['username'] = form.username.data  # add the user to session
             return redirect(request.args.get('next') or url_for('dashboard.index'))
@@ -58,7 +58,7 @@ def register():
     # create an instace of the Registration form
     form = Registration(request.form)
     if request.method == 'POST' and form.validate():  # if the request method is post
-        hashedpass = bcrypt.generate_password_hash(
+        hashedpass = ph.hash(
             form.password.data)  # encrypt the password
         if form.role.data == 'admin':
             admin = Admin(name=form.name.data, username=form.username.data,
@@ -68,7 +68,7 @@ def register():
             flash(f'Admin {form.username.data} registered!', 'success')
             return redirect(url_for("auth.login"))
         else:
-            hashedpass = bcrypt.generate_password_hash(
+            hashedpass = ph.hash(
                 form.password.data)  # encrypt the password
             astronaut = Astronaut(name=form.name.data, username=form.username.data,
                                   email=form.email.data, password=hashedpass,
