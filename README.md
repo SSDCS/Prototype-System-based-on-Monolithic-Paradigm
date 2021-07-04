@@ -4,7 +4,7 @@
 
 - Prior to running the application please delete the existing users.db database
 
-## Windows Powershell
+### Windows Powershell
 
 ```Powershell
 $env:FLASK_APP="application"
@@ -34,7 +34,7 @@ import populateDB
 exit()
 ```
 
-## Unix
+### Unix
 
 ```Terminal
 export FLASK_APP=application.py
