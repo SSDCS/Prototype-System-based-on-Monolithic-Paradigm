@@ -19,6 +19,10 @@ import application
 ```
 
 ```Flask Shell
+from application import db
+```
+
+```Flask Shell
 db.create_all()
 ```
 
@@ -38,6 +42,10 @@ flask shell
 
 ```Flask Shell
 import application
+```
+
+```Flask Shell
+from application import db
 ```
 
 ```Flask Shell
