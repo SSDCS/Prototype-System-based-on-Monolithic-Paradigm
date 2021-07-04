@@ -58,7 +58,7 @@ def register():
     # create an instace of the Registration form
     form = Registration(request.form)
     if request.method == 'POST' and form.validate():  # if the request method is post
-        hashedpass = bcrypt.generate_password_hash(
+        hashedpass = ph.hash(
             form.password.data)  # encrypt the password
         if form.role.data == 'admin':
             admin = Admin(name=form.name.data, username=form.username.data,
