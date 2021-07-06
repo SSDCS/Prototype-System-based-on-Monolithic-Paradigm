@@ -8,9 +8,12 @@ from data import generate_temperature
 import time
 import datetime
 
+def default(obj):
+    if isinstance(obj, (datetime.date, datetime.datetime)):
+        return obj.isoformat()
 
 temperature_producer = KafkaProducer(bootstrap_servers=['127.0.0.1:9092'],
-                                     value_serializer=lambda m: json.dumps(m).encode('ascii'))
+                                     value_serializer=lambda m: json.dumps(m, default=default).encode('ascii'))
 
 if __name__ == "__main__":
     while 1 == 1:
