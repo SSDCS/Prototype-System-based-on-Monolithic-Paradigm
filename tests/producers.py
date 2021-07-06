@@ -8,7 +8,7 @@ from data import generate_temperature
 import time
 
 
-temperature_producer = KafkaProducer(bootstrap_servers=['127.0.0.1:3030'],
+temperature_producer = KafkaProducer(bootstrap_servers=['127.0.0.1:9092'],
                          value_serializer=lambda m: json.dumps(m).encode('ascii'))
 
 if __name__ == "__main__":
