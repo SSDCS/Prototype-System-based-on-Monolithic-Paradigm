@@ -7,7 +7,7 @@ def generate_temperature():
     return {
         "schema": {
             "type": "struct", "version": 1, "fields": [
-                {"field": "ID", "type": "string"},
+                {"field": "ID", "type": "date"},
                 {"field": "Temperature", "type": "int64"}
             ]},
         "payload": {
