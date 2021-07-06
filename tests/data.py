@@ -1,5 +1,5 @@
 import random
-from datetime import datetime
+import datetime
 
 
 def generate_temperature():
@@ -11,7 +11,7 @@ def generate_temperature():
                 {"field": "Temperature", "type": "int64"}
             ]},
         "payload": {
-            "ID": datetime.now(),
+            "ID": datetime.datetime.now(),
             "Temperature": temperature,
         }
     }
