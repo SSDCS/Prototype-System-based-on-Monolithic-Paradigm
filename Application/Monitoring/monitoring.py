@@ -36,7 +36,6 @@ class Temperature():
                 self.sound_alarm()
             else:
                 print("Temperature perfect")
-                self.silence_alarm()
 
 
 class Electrial():
