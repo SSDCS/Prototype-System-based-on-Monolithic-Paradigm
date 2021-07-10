@@ -1,0 +1,19 @@
+{% extends "layout.html"%} {%block content%}
+<script>
+    let alert=false;
+    if (!!window.EventSource) {
+      var source = new EventSource('/electrical');
+      source.onmessage = function(e) {
+        $("#data").text(e.data);
+        if(parseInt(e.data) >= 21)
+            $("#alert").text("voltage to high");
+        else
+            $("#alert").text("");
+      }
+    }
+    
+    </script>
+    Temperature:<br>
+    <div id="data">No electrical readings</div>
+    <div id="alert"></div>
+{%endblock%}

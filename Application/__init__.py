@@ -22,6 +22,11 @@ def create_app(config_class=Config):
     from Application.temperature import bp as temperature_bp
     app.register_blueprint(temperature_bp)
 
+    from Application.electrical import bp as electrical_bp
+    app.register_blueprint(electrical_bp)
+
+
+
     return app
 
 from Application import models

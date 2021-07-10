@@ -1,6 +1,6 @@
 from kafka import KafkaConsumer
 import json
-import beepy
+#import beepy
 from threading import Thread
 
 temperature_consumer = KafkaConsumer(
