@@ -88,9 +88,9 @@ class fire():
 if __name__ == "__main__":
     while 1 == 1:
         temp = Temperature()
-        elec = Electrial()
-        
         t1 = Thread(target=temp.monitor_temperature())
-        t2 = Thread(elec.monitor_electrical())
         t1.start()
+
+        elec = Electrial()
+        t2 = Thread(elec.monitor_electrical())
         t2.start()
