@@ -13,9 +13,9 @@ class Temperature():
 
     def monitor_temperature(self):
         for temperature in temperature_consumer:
-            if temperature["Payload"]["Temperature"] < 19:
+            if temperature["payload"]["Temperature"] < 19:
                 print("Temperature too Low")
-            elif temperature["Payload"]["Temperature"] > 20:
+            elif temperature["payload"]["Temperature"] > 20:
                 print("Temperature too High")
             else:
                 print("Temperature perfect")
