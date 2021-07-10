@@ -91,5 +91,5 @@ if __name__ == "__main__":
         b = Electrial()
         aa = Thread(a.monitor_temperature)
         bb = Thread(b.monitor_electrical)
-        aa.start()
-        bb.start()
+        a.start()
+        b.start()
