@@ -86,7 +86,4 @@ class fire():
 
 if __name__ == "__main__":
     while 1 == 1:
-        # temperature_monitor = Temperature()
-        # temperature_monitor.monitor_temperature()
-        electrical_monitor = Electrial()
-        electrical_monitor.monitor_electrical()
+       Temperature.monitor_temperature()
