@@ -5,7 +5,7 @@ This is a new line
 from tests.data import generate_electrical, generate_fire, generate_oxygen
 from kafka import KafkaProducer
 import json
-from tests.data import generate_temperature, generate_electrical, generate_fire, generate_oxygen
+from data import generate_temperature, generate_electrical, generate_fire, generate_oxygen
 import time
 import datetime
 
