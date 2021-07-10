@@ -23,7 +23,7 @@ def generate_electrical():
         "schema": {
             "type": "struct", "version": 1, "fields": [
                 {"field": "ID", "type": "string"},
-                {"field": "Temperature", "type": "int64"}
+                {"field": "Kilowatt", "type": "int64"}
             ]},
         "payload": {
             "ID": datetime.datetime.now(),
@@ -32,5 +32,22 @@ def generate_electrical():
     }
 
 
+def generate_oxygen():
+    oxygen = random.randint(75, 100)
+    return {
+        "schema": {
+            "type": "struct", "version": 1, "fields": [
+                {"field": "ID", "type": "string"},
+                {"field": "O2", "type": "int64"}
+            ]},
+        "payload": {
+            "ID": datetime.datetime.now(),
+            "O2": oxygen,
+        }
+    }
+
+
 if __name__ == "__main__":
     print(generate_temperature())
+    print(generate_electrical())
+    print(generate_oxygen)
