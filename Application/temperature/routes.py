@@ -18,7 +18,7 @@ def temperature1():
         def events():
             for msg in consumer:
                 val = json.loads(msg.value)
-                yield "data: %d\n\n" % (val["temperature:"])
+                yield "data: %d\n\n" % (val["payload"]["Temperature"])
                 # time.sleep(.1)  # an artificial delay
         return Response(events(), content_type='text/event-stream')
     redirect('/temperature')

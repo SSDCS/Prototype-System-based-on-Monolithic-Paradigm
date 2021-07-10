@@ -1,4 +1,25 @@
 {% extends "layout.html"%} {%block content%}
+<script>
+    let alert=false;
+    if (!!window.EventSource) {
+      var source = new EventSource('/temperature');
+      var source2 = new EventSource('/electrical');
+      source.onmessage = function(e) {
+        $("#data").text(e.data);
+        if(parseInt(e.data) >= 21)
+          $("#temperature_id").css("background-color","red");
+        //else
+          //$("#temperature_id").css("background-color","white");
+      }
+      source2.onmessage = function(e) {
+        $("#electrical").text(e.data+"KW");
+      }
+      
+    }
+    function silent_temperature () {
+      $("#temperature_id").css("background-color","white");
+    }
+    </script>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
     <a class="navbar-brand" href="#" style="color: #a22929">ISS CONTROLLER</a>
@@ -61,10 +82,10 @@
           {%endif%}
         </div>
       </div>
-      <div class="card">
+      <div class="card" id="electrical_id">
         <h3 class="heading">Electrical Monitoring system</h3>
         <div class="reading">
-          <p class="val">Reading:<span class="r_val">1000KW</span></p>
+          <p class="val">Reading:<span class="r_val"><span id="electrical"></span></span></p>
         </div>
         <div class="btn_wrapper">
           <div><a href="#" class="activate">Something</a></div>
@@ -73,15 +94,15 @@
           {%endif%}
         </div>
       </div>
-      <div class="card">
+      <div class="card" id="temperature_id">
         <h3 class="heading">Temperature Monitoring system</h3>
         <div class="reading">
-          <p class="val">Reading:<span class="r_val">112 celcius</span></p>
+          <p class="val">Reading:<span class="r_val"><span id="data">No readings</span></span></p>
         </div>
         <div class="btn_wrapper">
           <div><a href="#" class="activate">Lower Temp</a></div>
           {% if user == "admin" %}
-          <div><a href="#" class="activate">Silence Alarm</a></div>
+          <div><a href="#" onclick="silent_temperature()" class="activate">Silence Alarm</a></div>
           {%endif%}
         </div>
       </div>
