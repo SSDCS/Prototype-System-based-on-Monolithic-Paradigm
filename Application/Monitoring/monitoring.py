@@ -66,10 +66,10 @@ class Electrial():
         for watts in electrical_consumer:
             val = json.loads(watts.value)
             print(val["payload"]["Kilowatt"])
-            if val["payload"]["Kilowatt"] < 19:
+            if val["payload"]["Kilowatt"] < 1000:
                 print("Kilowatt too Low")
                 self.sound_alarm()
-            elif val["payload"]["Kilowatt"] > 20:
+            elif val["payload"]["Kilowatt"] > 1002:
                 print("Kilowatt too High")
                 self.sound_alarm()
             else:
@@ -88,3 +88,5 @@ if __name__ == "__main__":
     while 1 == 1:
         temperature_monitor = Temperature()
         temperature_monitor.monitor_temperature()
+        electrical_monitor = Electrial()
+        electrical_monitor.monitor_electrical()
