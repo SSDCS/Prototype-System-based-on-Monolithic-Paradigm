@@ -47,7 +47,23 @@ def generate_oxygen():
     }
 
 
+def generate_fire():
+    fire = random.randint(75, 100)
+    return {
+        "schema": {
+            "type": "struct", "version": 1, "fields": [
+                {"field": "ID", "type": "string"},
+                {"field": "CO2", "type": "int64"}
+            ]},
+        "payload": {
+            "ID": datetime.datetime.now(),
+            "O2": fire,
+        }
+    }
+
+
 if __name__ == "__main__":
     print(generate_temperature())
     print(generate_electrical())
     print(generate_oxygen)
+    print(generate_fire())
