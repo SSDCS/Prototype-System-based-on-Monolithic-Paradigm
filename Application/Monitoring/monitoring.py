@@ -16,7 +16,7 @@ class Temperature():
 
     def sound_alarm(self):
         # beepy.beep(sound=1)
-        if SILENCED == True:
+        if self.SILENCED == True:
             print("Alarm Silenced")
         else:
             ALARM = True
