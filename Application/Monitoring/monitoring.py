@@ -14,7 +14,7 @@ class Temperature():
     ALARM = False
 
     def sound_alarm(self):
-        beepy.beep(sound=1)
+        # beepy.beep(sound=1)
         print("Alarm")
 
     def monitor_temperature(self):
