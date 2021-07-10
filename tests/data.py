@@ -48,7 +48,7 @@ def generate_oxygen():
 
 
 def generate_fire():
-    fire = random.randint(75, 100)
+    fire = random.randint(400, 1000)
     return {
         "schema": {
             "type": "struct", "version": 1, "fields": [
