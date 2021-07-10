@@ -12,12 +12,18 @@ fire_consumer = KafkaConsumer('fire', bootstrap_servers=['127.0.0.1:9092'])
 
 class Temperature():
     ALARM = False
+    SILENCED = False
 
     def sound_alarm(self):
         # beepy.beep(sound=1)
-        print("Alarm")
-        ALARM = True
-        print(ALARM)
+        if SILENCED == True:
+            print("Alarm Silenced")
+        else:
+            ALARM = True
+            print()
+
+    def silence_alarm(self):
+        ALARM = False
 
     def monitor_temperature(self):
         for temperature in temperature_consumer:
