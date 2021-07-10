@@ -15,6 +15,7 @@ class Temperature():
 
     def sound_alarm(self):
         beepy.beep(sound=1)
+        print("Alarm")
 
     def monitor_temperature(self):
         for temperature in temperature_consumer:
