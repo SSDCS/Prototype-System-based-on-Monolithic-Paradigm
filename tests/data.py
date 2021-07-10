@@ -65,5 +65,5 @@ def generate_fire():
 if __name__ == "__main__":
     print(generate_temperature())
     print(generate_electrical())
-    print(generate_oxygen)
+    print(generate_oxygen())
     print(generate_fire())
