@@ -40,7 +40,32 @@ class Temperature():
 
 
 class Electrial():
-    pass
+    ALARM = False
+    SILENCED = True
+
+    def sound_alarm(self):
+        # beepy.beep(sound=1)
+        if self.SILENCED == True:
+            print("Alarm Silenced")
+        else:
+            ALARM = True
+            print("Alarm")
+
+    def silence_alarm(self):
+        self.SILENCED = True
+
+    def monitor_electrical(self):
+        for watts in electrical_consumer:
+            val = json.loads(watts.value)
+            print(val["payload"]["Temperature"])
+            if val["payload"]["Temperature"] < 19:
+                print("Temperature too Low")
+                self.sound_alarm()
+            elif val["payload"]["Temperature"] > 20:
+                print("Temperature too High")
+                self.sound_alarm()
+            else:
+                print("Temperature perfect")
 
 
 class oxygen():
