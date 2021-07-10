@@ -11,7 +11,7 @@ fire_consumer = KafkaConsumer('fire', bootstrap_servers=['127.0.0.1:9092'])
 class Temperature():
     ALARM = False
 
-    def monitor_temperature():
+    def monitor_temperature(self):
         for temperature in temperature_consumer:
             if temperature["Payload"]["Temperature"] < 19:
                 print("Temperature too Low")
