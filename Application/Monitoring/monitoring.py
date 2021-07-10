@@ -2,8 +2,6 @@ from kafka import KafkaConsumer
 import json
 import beepy
 
-alarm = beepy()
-
 temperature_consumer = KafkaConsumer(
     'temperature', bootstrap_servers=['127.0.0.1:9092'])
 electrical_consumer = KafkaConsumer(
@@ -16,7 +14,7 @@ class Temperature():
     ALARM = False
 
     def sound_alarm(self):
-        alarm.beep(sound=1)
+        beepy.beep(sound=1)
 
     def monitor_temperature(self):
         for temperature in temperature_consumer:
