@@ -25,6 +25,10 @@ class Temperature():
     def silence_alarm(self):
         self.SILENCED = True
 
+    def reset_alarm(self):
+        self.SILENCED = False
+        self.ALARM = False
+
     def monitor_temperature(self):
         for temperature in temperature_consumer:
             val = json.loads(temperature.value)
