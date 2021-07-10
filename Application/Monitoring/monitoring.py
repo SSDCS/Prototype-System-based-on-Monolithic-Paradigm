@@ -24,7 +24,7 @@ class Temperature():
             print("Alarm")
 
     def silence_alarm(self):
-        ALARM = False
+        self.ALARM = False
 
     def monitor_temperature(self):
         for temperature in temperature_consumer:
