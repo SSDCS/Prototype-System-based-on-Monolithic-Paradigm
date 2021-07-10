@@ -1,4 +1,5 @@
 from kafka import KafkaConsumer
+import json
 
 temperature_consumer = KafkaConsumer(
     'temperature', bootstrap_servers=['127.0.0.1:9092'])
@@ -13,7 +14,8 @@ class Temperature():
 
     def monitor_temperature(self):
         for temperature in temperature_consumer:
-            print(temperature["payload"]["Temperature"])
+            val = json.loads(temperature.value)
+            print(val["payload"]["Temperature"])
             # if temperature["payload"]["Temperature"] < 19:
             #     print("Temperature too Low")
             # elif temperature["payload"]["Temperature"] > 20:
