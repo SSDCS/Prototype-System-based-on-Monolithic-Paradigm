@@ -20,7 +20,7 @@ class Temperature():
             print("Alarm Silenced")
         else:
             ALARM = True
-            print()
+            print("Alarm")
 
     def silence_alarm(self):
         ALARM = False
