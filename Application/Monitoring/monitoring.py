@@ -26,7 +26,7 @@ class Temperature():
                 print("Temperature too Low")
             elif val["payload"]["Temperature"] > 20:
                 print("Temperature too High")
-                Temperature.sound_alarm()
+                self.sound_alarm()
             else:
                 print("Temperature perfect")
 
