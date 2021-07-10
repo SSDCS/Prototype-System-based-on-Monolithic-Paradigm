@@ -18,7 +18,7 @@ def generate_temperature():
 
 
 def generate_electrical():
-    kilowatt = random.randint(1000, 10003)
+    kilowatt = random.randint(1000, 1003)
     return {
         "schema": {
             "type": "struct", "version": 1, "fields": [
