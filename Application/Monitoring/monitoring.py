@@ -89,7 +89,7 @@ if __name__ == "__main__":
     while 1 == 1:
         temperature_monitor = Temperature()
         electrical_monitor = Electrial()
-        a = Thread(target = temperature_monitor.monitor_temperature())
-        b = Thread(target = electrical_monitor.monitor_electrical())
-        a.start()
-        b.start()
+        temp_thread = Thread(target=temperature_monitor.monitor_temperature())
+        elec_thread = Thread(target=electrical_monitor.monitor_electrical())
+        temp_thread.start()
+        elec_thread.start()
