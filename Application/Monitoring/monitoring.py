@@ -16,8 +16,8 @@ class Temperature():
             if temperature["Payload"]["Temperature"] < 19:
                 print("Temperature too Low")
             elif temperature["Payload"]["Temperature"] > 20:
-                print ("Temperature too High")
-            else: 
+                print("Temperature too High")
+            else:
                 print("Temperature perfect")
 
 
@@ -31,3 +31,9 @@ class oxygen():
 
 class fire():
     pass
+
+
+if __name__ == "__main__":
+    while 1 == 1:
+        temperature_monitor = Temperature()
+        temperature_monitor.monitor_temperature()
