@@ -1,7 +1,7 @@
 from kafka import KafkaConsumer
 import json
 import beepy
-from threading import Thread
+from multiprocessing import Process
 
 temperature_consumer = KafkaConsumer(
     'temperature', bootstrap_servers=['127.0.0.1:9092'])
@@ -87,9 +87,5 @@ class fire():
 
 if __name__ == "__main__":
     while 1 == 1:
-        a = Temperature()
-        b = Electrial()
-        aa = Thread(target=a.monitor_temperature)
-        bb = Thread(target=b.monitor_electrical)
-        aa.start()
-        bb.start()
+        Process(target=Temperature.monitor_temperature()).start()
+        Process(target=Electrial.monitor_electrical()).start()
