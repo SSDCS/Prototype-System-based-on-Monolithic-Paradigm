@@ -1,5 +1,8 @@
 from kafka import KafkaConsumer
 import json
+import beepy
+
+alarm = beepy()
 
 temperature_consumer = KafkaConsumer(
     'temperature', bootstrap_servers=['127.0.0.1:9092'])
@@ -12,6 +15,9 @@ fire_consumer = KafkaConsumer('fire', bootstrap_servers=['127.0.0.1:9092'])
 class Temperature():
     ALARM = False
 
+    def sound_alarm(self):
+        alarm.beep(sound=1)
+
     def monitor_temperature(self):
         for temperature in temperature_consumer:
             val = json.loads(temperature.value)
@@ -20,6 +26,7 @@ class Temperature():
                 print("Temperature too Low")
             elif val["payload"]["Temperature"] > 20:
                 print("Temperature too High")
+                Temperature.sound_alarm()
             else:
                 print("Temperature perfect")
 
