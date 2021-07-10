@@ -16,12 +16,12 @@ class Temperature():
         for temperature in temperature_consumer:
             val = json.loads(temperature.value)
             print(val["payload"]["Temperature"])
-            # if temperature["payload"]["Temperature"] < 19:
-            #     print("Temperature too Low")
-            # elif temperature["payload"]["Temperature"] > 20:
-            #     print("Temperature too High")
-            # else:
-            #     print("Temperature perfect")
+            if val["payload"]["Temperature"] < 19:
+                print("Temperature too Low")
+            elif val["payload"]["Temperature"] > 20:
+                print("Temperature too High")
+            else:
+                print("Temperature perfect")
 
 
 class Electrial():
