@@ -2,7 +2,6 @@ from kafka import KafkaConsumer
 import json
 import beepy
 from threading import Thread
-import time
 
 temperature_consumer = KafkaConsumer(
     'temperature', bootstrap_servers=['127.0.0.1:9092'])
@@ -12,7 +11,7 @@ oxygen_consumer = KafkaConsumer('oxygen', bootstrap_servers=['127.0.0.1:9092'])
 fire_consumer = KafkaConsumer('fire', bootstrap_servers=['127.0.0.1:9092'])
 
 
-class Temperature():
+class Temperature(Thread):
     ALARM = False
     SILENCED = False
 
@@ -45,7 +44,7 @@ class Temperature():
                 print("Temperature perfect")
 
 
-class Electrial():
+class Electrial(Thread):
     ALARM = False
     SILENCED = False
 
@@ -78,17 +77,13 @@ class Electrial():
                 print("Kilowatt perfect")
 
 
-class oxygen():
+class oxygen(Thread):
     pass
 
 
-class fire():
+class fire(Thread):
     pass
 
 
 if __name__ == "__main__":
-    temp = Temperature()
-    temp.monitor_temperature()
-
-    elec = Electrial()
-    elec.monitor_electrical()
+    Temperature.monitor_temperature.start()
