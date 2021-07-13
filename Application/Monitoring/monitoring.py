@@ -58,7 +58,7 @@ class Electrial():
         self.ALARM = alarm
         self.SILENCED = silenced
 
-        self.monitor_temperature()
+        self.monitor_electrical()
 
     def sound_alarm(self):
         # beepy.beep(sound=1)
