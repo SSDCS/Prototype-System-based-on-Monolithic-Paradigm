@@ -15,6 +15,12 @@ class Temperature():
     ALARM = False
     SILENCED = False
 
+    def __init__(self, alarm=False, silenced=False):
+        self.ALARM = alarm
+        self.SILENCED = silenced
+
+        self.monitor_temperature()
+
     def sound_alarm(self):
         # beepy.beep(sound=1)
         if self.SILENCED == True:
@@ -47,6 +53,12 @@ class Temperature():
 class Electrial():
     ALARM = False
     SILENCED = False
+
+    def __init__(self, alarm=False, silenced=False):
+        self.ALARM = alarm
+        self.SILENCED = silenced
+
+        self.monitor_temperature()
 
     def sound_alarm(self):
         # beepy.beep(sound=1)
@@ -88,8 +100,8 @@ class fire():
 if __name__ == "__main__":
     temperature = Temperature()
     electrical = Electrial()
-    pr1 = multiprocessing.Process(target=temperature.monitor_temperature())
-    pr2 = multiprocessing.Process(target=electrical.monitor_electrical())
+    pr1 = multiprocessing.Process(target=temperature)
+    pr2 = multiprocessing.Process(target=electrical)
     pr1.start()
     pr2.start()
     pr1.join()
