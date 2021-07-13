@@ -1,7 +1,7 @@
 from kafka import KafkaConsumer
 import json
 #import beepy
-from threading import Thread
+import multiprocessing
 
 temperature_consumer = KafkaConsumer(
     'temperature', bootstrap_servers=['127.0.0.1:9092'])
@@ -11,7 +11,7 @@ oxygen_consumer = KafkaConsumer('oxygen', bootstrap_servers=['127.0.0.1:9092'])
 fire_consumer = KafkaConsumer('fire', bootstrap_servers=['127.0.0.1:9092'])
 
 
-class Temperature(Thread):
+class Temperature():
     ALARM = False
     SILENCED = False
 
@@ -44,7 +44,7 @@ class Temperature(Thread):
                 print("Temperature perfect")
 
 
-class Electrial(Thread):
+class Electrial():
     ALARM = False
     SILENCED = False
 
@@ -77,13 +77,20 @@ class Electrial(Thread):
                 print("Kilowatt perfect")
 
 
-class oxygen(Thread):
+class oxygen():
     pass
 
 
-class fire(Thread):
+class fire():
     pass
 
 
 if __name__ == "__main__":
-    Temperature.monitor_temperature.start()
+    temperature = Temperature()
+    electrical = Electrial()
+    pr1 = multiprocessing.Process(target=temperature.monitor_temperature())
+    pr2 = multiprocessing.Process(target=electrical.monitor_electrical())
+    pr1.start()
+    pr2.start()
+    pr1.join()
+    pr2.join()
