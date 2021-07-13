@@ -4,6 +4,7 @@
     if (!!window.EventSource) {
       var source = new EventSource('/temperature');
       var source2 = new EventSource('/electrical');
+      var source3 = new EventSource('/oxygen');
       source.onmessage = function(e) {
         $("#data").text(e.data);
         if(parseInt(e.data) >= 21)
@@ -13,6 +14,9 @@
       }
       source2.onmessage = function(e) {
         $("#electrical").text(e.data+"KW");
+      }
+      source3.onmessage = function(e) {
+        $("#oxygen").text(e.data+"%");
       }
       
     }
@@ -106,10 +110,10 @@
           {%endif%}
         </div>
       </div>
-      <div class="card">
+      <div class="card" id="oxygen_id">
         <h3 class="heading">Oxygen Monitoring system</h3>
         <div class="reading">
-          <p class="val">Reading:<span class="r_val">LOW</span></p>
+          <p class="val">Reading:<span class="r_val"><span id="oxygen">No readings</span></span></p>
         </div>
         <div class="btn_wrapper">
           <div><a href="#" class="activate">Activate Emer Oxy</a></div>

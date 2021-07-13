@@ -57,7 +57,7 @@ def generate_fire():
             ]},
         "payload": {
             "ID": datetime.datetime.now(),
-            "O2": fire,
+            "CO2": fire,
         }
     }
 
