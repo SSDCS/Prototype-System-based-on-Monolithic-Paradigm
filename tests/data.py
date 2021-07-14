@@ -48,16 +48,16 @@ def generate_oxygen():
 
 
 def generate_fire():
-    fire = random.randint(400, 1000)
+    fire = random.randint(40, 400)
     return {
         "schema": {
             "type": "struct", "version": 1, "fields": [
                 {"field": "ID", "type": "string"},
-                {"field": "CO2", "type": "int64"}
+                {"field": "CO", "type": "int64"}
             ]},
         "payload": {
             "ID": datetime.datetime.now(),
-            "CO2": fire,
+            "CO": fire,
         }
     }
 
