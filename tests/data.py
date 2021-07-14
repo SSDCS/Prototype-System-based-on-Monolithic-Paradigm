@@ -33,7 +33,7 @@ def generate_electrical():
 
 
 def generate_oxygen():
-    oxygen = random.randint(75, 100)
+    oxygen = random.randint(15, 20)
     return {
         "schema": {
             "type": "struct", "version": 1, "fields": [
