@@ -18,7 +18,7 @@ def electrical1():
         def events():
             for msg in consumer:
                 val = json.loads(msg.value)
-                yield "data: %d\n\n" % (val["payload"]["CO2"])
+                yield "data: %d\n\n" % (val["payload"]["CO"])
                 # time.sleep(.1)  # an artificial delay
         return Response(events(), content_type='text/event-stream')
     redirect('/fire')
