@@ -1,6 +1,7 @@
 """
 Authentication routes 
 """
+from socket import AF_UNSPEC
 from flask import render_template, url_for, session, request, redirect, flash
 from Application import db
 from Application import ph
@@ -15,7 +16,6 @@ def login():
     """ This function is reposible for all login requests
     Args:
         None
-
     Returns:
         ON GET:
             If: user is not logged in return login.html
@@ -31,16 +31,24 @@ def login():
         astronaut = Astronaut.query.filter_by(
             username=form.username.data).first()
         # if the astronaut exists and the password hash matches the hash fro entered password
-        if astronaut and ph.verify(astronaut.password, form.password.data):
-            session['myuser'] = "astronaut"
-            session['username'] = form.username.data  # add the user to session
-            return redirect(request.args.get('next') or url_for('dashboard.index'))
-        elif admin and ph.verify(admin.password, form.password.data):
-            session['myuser'] = "admin"
-            session['username'] = form.username.data  # add the user to session
-            return redirect(request.args.get('next') or url_for('dashboard.index'))
+        if astronaut:
+            try:
+                ph.verify(astronaut.password, form.password.data)
+                session['myuser'] = "astronaut"
+                session['username'] = form.username.data  # add the user to session
+                return redirect(request.args.get('next') or url_for('dashboard.index'))
+            except:
+                flash('Incorrect Password.', 'danger')
+        elif admin:
+            try:
+                ph.verify(admin.password, form.password.data)
+                session['myuser'] = "admin"
+                session['username'] = form.username.data  # add the user to session
+                return redirect(request.args.get('next') or url_for('dashboard.index'))
+            except:
+                flash('Incorrect Password.', 'danger')
         else:
-            flash('Wrong password/email. Please try again.', 'danger')
+            flash('Incorrect Username or Password.', 'danger')
     return render_template("login.html", form=form, title="Login page")
 
 
@@ -48,10 +56,8 @@ def login():
 @login_required
 def register():
     """ This function is used to register new users
-
     Args:
         None.
-
     Returns:
         register.html
     """
@@ -63,20 +69,28 @@ def register():
         if form.role.data == 'admin':
             admin = Admin(name=form.name.data, username=form.username.data,
                           email=form.email.data, password=hashedpass)
-            db.session.add(admin)  # add to db
-            db.session.commit()  # commit the process for the actual save.
-            flash(f'Admin {form.username.data} registered!', 'success')
-            return redirect(url_for("auth.login"))
+            existing_user = Admin.query.filter_by(username=form.username.data).first()
+            if existing_user:
+                flash('User Already Exists', 'danger')
+            else:
+                db.session.add(admin)  # add to db
+                db.session.commit()  # commit the process for the actual save.
+                flash(f'Admin {form.username.data} registered!', 'success')
+                return redirect(url_for("auth.login"))
         else:
             hashedpass = ph.hash(
                 form.password.data)  # encrypt the password
             astronaut = Astronaut(name=form.name.data, username=form.username.data,
                                   email=form.email.data, password=hashedpass,
                                   admin_id=session['username'])
-            db.session.add(astronaut)  # add to db
-            db.session.commit()  # commit the process for the actual save.
-            flash(f'Astronuat {form.username.data} registered!', 'success')
-            return redirect(url_for("auth.login"))
+            existing_user = Astronaut.query.filter_by(username=form.username.data).first()
+            if existing_user:
+                flash('User Already Exists', 'danger')
+            else:
+                db.session.add(astronaut)  # add to db
+                db.session.commit()  # commit the process for the actual save.
+                flash(f'Astronuat {form.username.data} registered!', 'success')
+                return redirect(url_for("auth.login"))
     return render_template("register.html", form=form)
 
 # astronaut logout route
@@ -86,10 +100,8 @@ def register():
 @login_required  # applying the login decorator.
 def logout():
     """ This function is used to terminate the session cookie
-
     Args:
         None
-
     Returns:
         auth.login route which propts user to login
     """
