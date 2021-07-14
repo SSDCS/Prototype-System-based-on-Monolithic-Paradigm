@@ -1,6 +1,11 @@
 from Application import create_app, db
 from Application.models import Admin, Astronaut
-from Application.Monitoring import monitoring
+from Application.Monitoring.monitoring import Temperature, Electrial, Oxygen, Fire
+
+temperature = Temperature()
+electrical = Electrial()
+oxygen = Oxygen()
+fire = Fire()
 
 app = create_app()
 
