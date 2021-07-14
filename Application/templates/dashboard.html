@@ -1,33 +1,32 @@
 {% extends "layout.html"%} {%block content%}
 <script>
-    let alert=false;
-    if (!!window.EventSource) {
-      var source = new EventSource('/temperature');
-      var source2 = new EventSource('/electrical');
-      var source3 = new EventSource('/oxygen');
-      var source4 = new EventSource('/fire');
-      source.onmessage = function(e) {
-        $("#data").text(e.data);
-        if(parseInt(e.data) >= 21)
-          $("#temperature_id").css("background-color","red");
-        //else
-          //$("#temperature_id").css("background-color","white");
-      }
-      source2.onmessage = function(e) {
-        $("#electrical").text(e.data+"KW");
-      }
-      source3.onmessage = function(e) {
-        $("#oxygen").text(e.data+"% O2");
-      }
-      source4.onmessage = function(e) {
-        $("#fire").text(e.data+"% CO2");
-      }
-      
-    }
-    function silent_temperature () {
-      $("#temperature_id").css("background-color","white");
-    }
-    </script>
+  let alert = false;
+  if (!!window.EventSource) {
+    var source = new EventSource("/temperature");
+    var source2 = new EventSource("/electrical");
+    var source3 = new EventSource("/oxygen");
+    var source4 = new EventSource("/fire");
+    source.onmessage = function (e) {
+      $("#data").text(e.data);
+      if (parseInt(e.data) >= 21)
+        $("#temperature_id").css("background-color", "red");
+      //else
+      //$("#temperature_id").css("background-color","white");
+    };
+    source2.onmessage = function (e) {
+      $("#electrical").text(e.data + "KW");
+    };
+    source3.onmessage = function (e) {
+      $("#oxygen").text(e.data + "% O2");
+    };
+    source4.onmessage = function (e) {
+      $("#fire").text(e.data + "% CO2");
+    };
+  }
+  function silent_temperature() {
+    $("#temperature_id").css("background-color", "white");
+  }
+</script>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
     <a class="navbar-brand" href="#" style="color: #a22929">ISS CONTROLLER</a>
@@ -59,7 +58,10 @@
         {% if user == "admin" %}
         <li class="nav-item">
           <!-- TODO: Use URL For to redirect to register route -->
-          <a class="nav-link" href="{{ url_for('auth.register') }}" style="color: #a22929"
+          <a
+            class="nav-link"
+            href="{{ url_for('auth.register') }}"
+            style="color: #a22929"
             >Create user</a
           >
         </li>
@@ -67,7 +69,12 @@
       </ul>
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('auth.logout') }}" style="color: #a22929">Logout</a>
+          <a
+            class="nav-link"
+            href="{{ url_for('auth.logout') }}"
+            style="color: #a22929"
+            >Logout</a
+          >
         </li>
       </ul>
     </div>
@@ -75,13 +82,14 @@
 </nav>
 <div class="container1">{% include "_msgs.html"%}</div>
 <div class="container">
-  {% if user == "admin" %}
   <div class="cards_wrapper">
     <div class="admin_container">
       <div class="card" id="fire_id">
         <h3 class="heading">Fire Monitoring system</h3>
         <div class="reading">
-          <p class="val">Reading:<span class="r_val"><span id="fire"></span></span></p>
+          <p class="val">
+            Reading:<span class="r_val"><span id="fire"></span></span>
+          </p>
         </div>
         <div class="btn_wrapper">
           <div><a href="#" class="activate">Fire Suppression</a></div>
@@ -93,7 +101,9 @@
       <div class="card" id="electrical_id">
         <h3 class="heading">Electrical Monitoring system</h3>
         <div class="reading">
-          <p class="val">Reading:<span class="r_val"><span id="electrical"></span></span></p>
+          <p class="val">
+            Reading:<span class="r_val"><span id="electrical"></span></span>
+          </p>
         </div>
         <div class="btn_wrapper">
           <div><a href="#" class="activate">Something</a></div>
@@ -105,19 +115,31 @@
       <div class="card" id="temperature_id">
         <h3 class="heading">Temperature Monitoring system</h3>
         <div class="reading">
-          <p class="val">Reading:<span class="r_val"><span id="data">No readings</span></span></p>
+          <p class="val">
+            Reading:<span class="r_val"
+              ><span id="data">No readings</span></span
+            >
+          </p>
         </div>
         <div class="btn_wrapper">
           <div><a href="#" class="activate">Lower Temp</a></div>
           {% if user == "admin" %}
-          <div><a href="#" onclick="silent_temperature()" class="activate">Silence Alarm</a></div>
+          <div>
+            <a href="#" onclick="silent_temperature()" class="activate"
+              >Silence Alarm</a
+            >
+          </div>
           {%endif%}
         </div>
       </div>
       <div class="card" id="oxygen_id">
         <h3 class="heading">Oxygen Monitoring system</h3>
         <div class="reading">
-          <p class="val">Reading:<span class="r_val"><span id="oxygen">No readings</span></span></p>
+          <p class="val">
+            Reading:<span class="r_val"
+              ><span id="oxygen">No readings</span></span
+            >
+          </p>
         </div>
         <div class="btn_wrapper">
           <div><a href="#" class="activate">Activate Emer Oxy</a></div>
@@ -128,60 +150,5 @@
       </div>
     </div>
   </div>
-
-  {% else %}
-  <div class="cards_wrapper">
-    <div class="admin_container">
-      <div class="card">
-        <h3 class="heading">Fire Monitoring system</h3>
-        <div class="reading">
-          <p class="val">Reading:<span class="r_val">100</span></p>
-        </div>
-        <div class="btn_wrapper">
-          <div><a href="#" class="activate">Activate Alarm</a></div>
-          {% if user == "admin" %}
-          <div><a href="#" class="activate">Silence Alarm</a></div>
-          {%endif%}
-        </div>
-      </div>
-      <div class="card">
-        <h3 class="heading">Electrical Monitoring system</h3>
-        <div class="reading">
-          <p class="val">Reading:<span class="r_val">1000KW</span></p>
-        </div>
-        <div class="btn_wrapper">
-          <div><a href="#" class="activate">Activate Alarm</a></div>
-          {% if user == "admin" %}
-          <div><a href="#" class="activate">Silence Alarm</a></div>
-          {%endif%}
-        </div>
-      </div>
-      <div class="card">
-        <h3 class="heading">Temperature Monitoring system</h3>
-        <div class="reading">
-          <p class="val">Reading:<span class="r_val">112 celcius</span></p>
-        </div>
-        <div class="btn_wrapper">
-          <div><a href="#" class="activate">Activate Alarm</a></div>
-          {% if user == "admin" %}
-          <div><a href="#" class="activate">Silence Alarm</a></div>
-          {%endif%}
-        </div>
-      </div>
-      <div class="card">
-        <h3 class="heading">Oxygen Monitoring system</h3>
-        <div class="reading">
-          <p class="val">Reading:<span class="r_val">LOW</span></p>
-        </div>
-        <div class="btn_wrapper">
-          <div><a href="#" class="activate">Activate Alarm</a></div>
-          {% if user == "admin" %}
-          <div><a href="#" class="activate">Silence Alarm</a></div>
-          {%endif%}
-        </div>
-      </div>
-    </div>
-  </div>
-  {% endif %}
 </div>
 {%endblock content%}
