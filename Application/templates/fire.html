@@ -1,0 +1,19 @@
+{% extends "layout.html"%} {%block content%}
+<script>
+    let alert=false;
+    if (!!window.EventSource) {
+      var source = new EventSource('/fire');
+      source.onmessage = function(e) {
+        $("#data").text(e.data);
+        /*if(parseInt(e.data) >= 21)
+            $("#alert").text("TEMPERATURE TOO HIGH");
+        else
+            $("#alert").text("");*/
+      }
+    }
+    
+    </script>
+    Oxygen:<br>
+    <div id="data">No CO2 readings</div>
+    <div id="alert"></div>
+{%endblock%}

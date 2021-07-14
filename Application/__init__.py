@@ -28,6 +28,9 @@ def create_app(config_class=Config):
     from Application.oxygen import bp as oxygen_bp
     app.register_blueprint(oxygen_bp)
 
+    from Application.fire import bp as fire_bp
+    app.register_blueprint(fire_bp)
+
 
 
     return app
