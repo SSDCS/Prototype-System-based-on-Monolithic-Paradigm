@@ -11,7 +11,7 @@ if __name__ == '__main__':
     t2 = Thread(target=Electrial)
     t3 = Thread(target=Oxygen)
     t4 = Thread(target=Fire)
-    t5 = Thread(target=app.run(host='0.0.0.0', port=5000, debug=True))
+    t5 = Thread(target=app.run(host='0.0.0.0', port=5000, debug=False))
     t1.setDaemon(True)
     t2.setDaemon(True)
     t3.setDaemon(True)
