@@ -16,6 +16,18 @@
   justify-content: center;
   padding: 10px;
 }
+.card2 {
+  width: 330px;
+  height: 220px;
+  box-shadow: 1px 1px 4px 2px #e41515;
+  margin: 10px;
+  cursor: pointer;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 10px;
+}
 .cards_wrapper {
   display: flex;
   justify-content: center;
