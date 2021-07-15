@@ -95,5 +95,5 @@ class OveralStatus(db.Model):
     oxygen=db.Column(db.String(30))
 
     def __repr__(self):
-        return '<Overal_Status %r>' % self.fire
+        return '<Overal_Status %r>' % self.fire            
 # db.create_all()  # it actually creates the table on the database.
