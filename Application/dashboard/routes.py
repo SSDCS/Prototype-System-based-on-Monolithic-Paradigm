@@ -14,9 +14,9 @@ scheduler = BackgroundScheduler()
 from Application.models import Sensor, SensorData
 
 
-fire=102
-temp=300
-oxygen=600
+fire=50
+temp=30
+oxygen=60
 electrical=88
 
 temp_status=""
