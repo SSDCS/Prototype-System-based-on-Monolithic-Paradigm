@@ -18,7 +18,8 @@ class Registration(Form):
     email = StringField('Email Address:', [
                         validators.Length(min=6, max=35), validators.Email()])
     password = PasswordField('New Password:', [
-        validators.DataRequired(),
+        validators.DataRequired(),validators.Length(min=8),
+        validators.Regexp("^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[^\W_]{8,}$",message="All passwords should contain a lowercase, an uppercase and a number"),
         validators.EqualTo('confirm', message='Passwords must match')
     ])
     confirm = PasswordField('Repeat Password:')

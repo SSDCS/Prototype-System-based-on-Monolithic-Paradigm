@@ -9,7 +9,7 @@ from kafka import KafkaConsumer
 import json
 
 
-consumer = KafkaConsumer('temperature', bootstrap_servers=['127.0.0.1:9092'])
+# consumer = KafkaConsumer('temperature', bootstrap_servers=['127.0.0.1:9092'])
 
 
 @bp.route('/temperature', methods=['GET', 'POST'])
