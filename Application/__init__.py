@@ -3,11 +3,9 @@ from flask_sqlalchemy import SQLAlchemy
 from argon2 import PasswordHasher
 from config import Config
 
-
 db = SQLAlchemy()  # instantiates the SQLAlchemy object
  # instantiates the SQLAlchemy object
 ph = PasswordHasher() # instantiate the argon2 password hashinng algorithm
-
 
 def create_app(config_class=Config):
     app = Flask(__name__)

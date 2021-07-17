@@ -6,17 +6,16 @@ from flask.globals import request, session
 from Application.dashboard import bp
 from ..decorators import login_required
 from sqlalchemy.sql.expression import func
-from application import db
+from application import db, app
 import collections 
-
-from apscheduler.schedulers.background import BackgroundScheduler
-scheduler = BackgroundScheduler()
 from Application.models import Sensor, SensorData
+from apscheduler.schedulers.background import BackgroundScheduler
 
+scheduler=BackgroundScheduler()
 
 fire=50
 temp=30
-oxygen=60
+oxygen=20
 electrical=88
 
 temp_status=""
@@ -24,8 +23,6 @@ oxygen_status=""
 electrical_status=""
 fire_status=""
 
-prevData=[]
-currentData=[]
 def check_sensors(color):
     session['color'] = color
     global fire_status
@@ -61,42 +58,44 @@ def check_sensors(color):
     db.session.add(health_data)
     db.session.commit()
    
+prevData=[]
+currentData=[]
 def copy_to_eng():
-    id=db.session.query(func.max(Sensor.id)) 
-    sensor_data=Sensor.query.filter_by(id=id)
-    for dt in sensor_data:
-        fire=dt.fire
-        electrical=dt.electrical
-        oxygen=dt.oxygen
-        temp=dt.temperature  
-        currentData.append(fire)
-        currentData.append(electrical)
-        currentData.append(oxygen)
-        currentData.append(temp)
+    with app.app_context():
+        print("Adding to engineeringDb")
+        id=db.session.query(func.max(Sensor.id)) 
+        sensor_data=Sensor.query.filter_by(id=id)
+   
+        for dt in sensor_data:
+            fire=dt.fire
+            electrical=dt.electrical
+            oxygen=dt.oxygen
+            temp=dt.temperature  
+            currentData.append(fire)
+            currentData.append(electrical)
+            currentData.append(oxygen)
+            currentData.append(temp)
 
-    id=db.session.query(func.max(SensorData.id)) 
-    sensor_data2=SensorData.query.filter_by(id=id)
-
-    for data in sensor_data2:
-        fire2=data.fire
-        electrical2=data.electrical
-        oxygen2=data.oxygen
-        temp2=data.temperature  
-        prevData.append(fire2)
-        prevData.append(electrical2)
-        prevData.append(oxygen2)
-        prevData.append(temp2)
+        id=db.session.query(func.max(SensorData.id)) 
+        sensor_data2=SensorData.query.filter_by(id=id)
+        for data in sensor_data2:
+            fire2=data.fire
+            electrical2=data.electrical
+            oxygen2=data.oxygen
+            temp2=data.temperature  
+            prevData.append(fire2)
+            prevData.append(electrical2)
+            prevData.append(oxygen2)
+            prevData.append(temp2)
     
-    if collections.Counter(currentData) != collections.Counter(prevData):
-        sensor_data = SensorData(fire=fire, electrical=electrical, temperature=temp, oxygen=oxygen)
-        db.session.add(sensor_data)
-        db.session.commit()
-        print("added")
-    else:
-        pass    
+        if collections.Counter(currentData) != collections.Counter(prevData):
+            sensor_data = SensorData(fire=fire, electrical=electrical, temperature=temp, oxygen=oxygen)
+            db.session.add(sensor_data)
+            db.session.commit()
     
-scheduler.start()
-
+        else:
+         pass       
+scheduler.start() 
 @bp.route('/', methods=['GET', 'POST'])
 @bp.route('/index', methods=['GET', 'POST'])
 @login_required
@@ -109,10 +108,8 @@ def index():
             set_color=session['set_color']
             check_sensors(set_color+"_"+str(id))
     else:
-        check_sensors(col)   
-    scheduler.add_job(copy_to_eng, 'interval', minutes=1)
-
-    print(f"Electrical status is {electrical_status}")
+        check_sensors(col)  
+    scheduler.add_job(copy_to_eng, 'interval', seconds=60)    
     return render_template('dashboard.html', user=user, fire=fire, oxygen=oxygen, electrical=electrical,
     temp=temp, electrical_status=electrical_status, fire_status=fire_status, oxygen_status=oxygen_status, temp_status=temp_status, color=session['color'])
 
