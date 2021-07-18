@@ -1,5 +1,6 @@
-"""
-Authentication routes 
+"""Authentication Blueprint
+
+ The following Flask Blueprint defines URL's/routes for all authentication requests. 
 """
 from socket import AF_UNSPEC
 from flask import render_template, url_for, session, request, redirect, flash
@@ -25,7 +26,7 @@ def login():
     if "username" in session:
         # for persistence purposes
         return redirect(url_for('dashboard.index'))
-    form = Login(request.form) # create an instace of the login form
+    form = Login(request.form)  # create an instace of the login form
     if request.method == 'POST' and form.validate():  # if the method is post and the form validates
         admin = Admin.query.filter_by(username=form.username.data).first()
         # find the astronaut in the database
@@ -36,7 +37,8 @@ def login():
             try:
                 ph.verify(astronaut.password, form.password.data)
                 session['myuser'] = "astronaut"
-                session['username'] = form.username.data  # add the user to session
+                # add the user to session
+                session['username'] = form.username.data
                 return redirect(request.args.get('next') or url_for('dashboard.index'))
             except:
                 flash('Incorrect Password.', 'danger')
@@ -44,7 +46,8 @@ def login():
             try:
                 ph.verify(admin.password, form.password.data)
                 session['myuser'] = "admin"
-                session['username'] = form.username.data  # add the user to session
+                # add the user to session
+                session['username'] = form.username.data
                 return redirect(request.args.get('next') or url_for('dashboard.index'))
             except:
                 flash('Incorrect Password.', 'danger')
@@ -72,7 +75,8 @@ def register():
         if form.role.data == 'admin':
             admin = Admin(name=form.name.data, username=form.username.data,
                           email=form.email.data, password=hashedpass)
-            existing_user = Admin.query.filter_by(username=form.username.data).first()
+            existing_user = Admin.query.filter_by(
+                username=form.username.data).first()
             if existing_user:
                 flash('User Already Exists', 'danger')
             else:
@@ -86,7 +90,8 @@ def register():
             astronaut = Astronaut(name=form.name.data, username=form.username.data,
                                   email=form.email.data, password=hashedpass,
                                   admin_id=session['username'])
-            existing_user = Astronaut.query.filter_by(username=form.username.data).first()
+            existing_user = Astronaut.query.filter_by(
+                username=form.username.data).first()
             if existing_user:
                 flash('User Already Exists', 'danger')
             else:
