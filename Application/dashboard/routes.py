@@ -11,6 +11,8 @@ import collections
 from Application.models import Sensor, SensorData
 from apscheduler.schedulers.background import BackgroundScheduler
 
+scheduler=BackgroundScheduler()
+
 @bp.route('/', methods=['GET', 'POST'])
 @bp.route('/index', methods=['GET', 'POST'])
 @login_required
