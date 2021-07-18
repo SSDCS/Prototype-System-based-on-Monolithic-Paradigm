@@ -17,19 +17,19 @@ scheduler=BackgroundScheduler()
 prevData=[]
 currentData=[]
 def copy_to_eng():
-""" # functions that copy data from the health table to engineering table
-      
-     Varables healthDB:
-              Fire,electrical,oxygen,temp
-              
-     Varables EngDB:
-              Fire2,electrical2,oxygen2,temp2
+    """ # functions that copy data from the health table to engineering table
+        
+        Varables healthDB:
+                Fire,electrical,oxygen,temp
+                
+        Varables EngDB:
+                Fire2,electrical2,oxygen2,temp2
 
-      TODO: Start the scheduler.
-        :param bool paused: if True, don't start job processing until current job is done.
-         Problem is that new child process initializes and starts a new APScheduler causing the jobs to run twice.
-         For further info: https://apscheduler.readthedocs.io/en/latest/userguide.html#scheduler-events
- """
+        TODO: Start the scheduler.
+            :param bool paused: if True, don't start job processing until current job is done.
+            Problem is that new child process initializes and starts a new APScheduler causing the jobs to run twice.
+            For further info: https://apscheduler.readthedocs.io/en/latest/userguide.html#scheduler-events
+    """
     with app.app_context():
         print("Adding to engineeringDb") # this is just for a visual test
         id=db.session.query(func.max(Sensor.id)) # current information on the engineering information
