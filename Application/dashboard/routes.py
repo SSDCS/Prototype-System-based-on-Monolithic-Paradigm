@@ -62,7 +62,7 @@ prevData=[]
 currentData=[]
 def copy_to_eng():
     with app.app_context():
-        print("Adding to engineeringDb")
+        print("Adding to engineeringDb") #test 
         id=db.session.query(func.max(Sensor.id)) 
         sensor_data=Sensor.query.filter_by(id=id)
    
