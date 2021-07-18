@@ -41,6 +41,15 @@
   function silent_fire() {
     $("#fire_id").css("background-color", "white");
   }
+  function fire_supression() {
+    $("#fire_id").css("background-color", "red");
+  }
+  function oxygen_supression() {
+    $("#oxygen_id").css("background-color", "red");
+  }
+  function lower_temperature() {
+    $("#data").innerHTML=parseInt($("#data").innerHTML)-5;
+  }
 </script>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
@@ -108,7 +117,7 @@
         </div>
         <div class="btn_wrapper">
           {% if user == "admin" %}
-          <div><a href="#" class="activate">Fire Suppression</a></div>
+          <div><a href="#" onclick="fire_supression()" class="activate">Fire Suppression</a></div>
           <div>
             <a href="#" onclick="silent_fire()" class="activate"
               >Silence Alarm</a>
@@ -125,7 +134,7 @@
         </div>
         <div class="btn_wrapper">
           {% if user == "admin" %}
-          <div><a href="#" class="activate">Something</a></div>
+          <!--<div><a href="#" class="activate">Something</a></div>-->
           <div>
             <a href="#" onclick="silent_eletrical()" class="activate"
               >Silence Alarm</a>
@@ -144,7 +153,7 @@
         </div>
         <div class="btn_wrapper">
           {% if user == "admin" %}
-          <div><a href="#" class="activate">Lower Temp</a></div>
+          <div><a href="#" onclick="lower_temperature()" class="activate">Lower Temp</a></div>
           <div>
             <a href="#" onclick="silent_temperature()" class="activate"
               >Silence Alarm</a>
@@ -163,7 +172,7 @@
         </div>
         <div class="btn_wrapper">
           {% if user == "admin" %}
-          <div><a href="#" class="activate">Activate Emer Oxy</a></div>
+          <div><a href="#" onclick="oxygen_supression()" class="activate">Activate Emer Oxy</a></div>
           <div>
             <a href="#" onclick="silent_oxygen()" class="activate"
               >Silence Alarm</a>
