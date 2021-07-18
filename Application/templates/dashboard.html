@@ -15,16 +15,40 @@
     };
     source2.onmessage = function (e) {
       $("#electrical").text(e.data + "KW");
+      if (parseInt(e.data) >= 1002)
+        $("#eletrical_id").css("background-color", "red");
     };
     source3.onmessage = function (e) {
       $("#oxygen").text(e.data + "% O2");
+      if (parseInt(e.data) <= 16)
+        $("#oxygen_id").css("background-color", "red");
     };
     source4.onmessage = function (e) {
       $("#fire").text(e.data + "% CO2");
+      if (parseInt(e.data) >= 200)
+        $("#fire_id").css("background-color", "red");
     };
   }
   function silent_temperature() {
     $("#temperature_id").css("background-color", "white");
+  }
+  function silent_eletrical() {
+    $("#eletrical_id").css("background-color", "white");
+  }
+  function silent_oxygen() {
+    $("#oxygen_id").css("background-color", "white");
+  }
+  function silent_fire() {
+    $("#fire_id").css("background-color", "white");
+  }
+  function fire_supression() {
+    $("#fire_id").css("background-color", "red");
+  }
+  function oxygen_supression() {
+    $("#oxygen_id").css("background-color", "red");
+  }
+  function lower_temperature() {
+    $("#data").innerHTML=parseInt($("#data").innerHTML)-5;
   }
 </script>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -85,7 +109,7 @@
   <div class="cards_wrapper">
     <div class="admin_container">
       <div class="card" id="fire_id">
-        <h3 class="heading">Fire Monitoring system</h3>
+        <h3 class="heading">Fire Monitoring <br>system</h3>
         <div class="reading">
           <p class="val">
             Reading:<span class="r_val"><span id="fire"></span></span>
@@ -93,13 +117,16 @@
         </div>
         <div class="btn_wrapper">
           {% if user == "admin" %}
-          <div><a href="#" class="activate">Fire Suppression</a></div>
-          <div><a href="#" class="activate">Silence Alarm</a></div>
+          <div><a href="#" onclick="fire_supression()" class="activate">Fire Suppression</a></div>
+          <div>
+            <a href="#" onclick="silent_fire()" class="activate"
+              >Silence Alarm</a>
+          </div>
           {%endif%}
         </div>
       </div>
       <div class="card" id="electrical_id">
-        <h3 class="heading">Electrical Monitoring system</h3>
+        <h3 class="heading">Electrical Monitoring <br>system</h3>
         <div class="reading">
           <p class="val">
             Reading:<span class="r_val"><span id="electrical"></span></span>
@@ -107,13 +134,16 @@
         </div>
         <div class="btn_wrapper">
           {% if user == "admin" %}
-          <div><a href="#" class="activate">Something</a></div>
-          <div><a href="#" class="activate">Silence Alarm</a></div>
+          <!--<div><a href="#" class="activate">Something</a></div>-->
+          <div>
+            <a href="#" onclick="silent_eletrical()" class="activate"
+              >Silence Alarm</a>
+          </div>
           {%endif%}
         </div>
       </div>
       <div class="card" id="temperature_id">
-        <h3 class="heading">Temperature Monitoring system</h3>
+        <h3 class="heading">Temperature Monitoring <br>system</h3>
         <div class="reading">
           <p class="val">
             Reading:<span class="r_val"
@@ -123,17 +153,16 @@
         </div>
         <div class="btn_wrapper">
           {% if user == "admin" %}
-          <div><a href="#" class="activate">Lower Temp</a></div>
+          <div><a href="#" onclick="lower_temperature()" class="activate">Lower Temp</a></div>
           <div>
             <a href="#" onclick="silent_temperature()" class="activate"
-              >Silence Alarm</a
-            >
+              >Silence Alarm</a>
           </div>
           {%endif%}
         </div>
       </div>
       <div class="card" id="oxygen_id">
-        <h3 class="heading">Oxygen Monitoring system</h3>
+        <h3 class="heading">Oxygen Monitoring <br>system</h3>
         <div class="reading">
           <p class="val">
             Reading:<span class="r_val"
@@ -143,8 +172,11 @@
         </div>
         <div class="btn_wrapper">
           {% if user == "admin" %}
-          <div><a href="#" class="activate">Activate Emer Oxy</a></div>
-          <div><a href="#" class="activate">Silence Alarm</a></div>
+          <div><a href="#" onclick="oxygen_supression()" class="activate">Activate Emer Oxy</a></div>
+          <div>
+            <a href="#" onclick="silent_oxygen()" class="activate"
+              >Silence Alarm</a>
+          </div>
           {%endif%}
         </div>
       </div>
