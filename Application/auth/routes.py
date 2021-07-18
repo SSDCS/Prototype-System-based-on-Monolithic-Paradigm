@@ -4,22 +4,23 @@
 
 login:
     The login route begins by establishing whether a user is logged in to the system.
-    If the user is not logged in, they are presented with a login form. 
-    When completing the form, we evaluate whether the username entered is an administrator or astronaut, 
-    followed by verifying whether the password entered matches the stored hash in the database.
+    If the user is not logged in, they are presented with a login form.
+    When completing the form, we evaluate whether the username entered is
+    an administrator or astronaut, followed by verifying whether the password
+    entered matches the stored hash in the database.
 
 
 register:
-    The register route is only accessible by administrators, and this is determined within the dashboard template.
-    The administrator is presented with a registration form '/Application/auth/forms.py'. 
+    The register route is only accessible by administrators, and this is determined
+    within the dashboard template.
+    The administrator is presented with a registration form '/Application/auth/forms.py'.
     The administrator has the choice of creating additional administrator and astronaut accounts.
 
 logout:
-    The logout route is used to log users out of the system by clearing the session cookie stored 
+    The logout route is used to log users out of the system by clearing the session cookie stored
     on the system accessing the application.
 
 """
-from socket import AF_UNSPEC
 from flask import render_template, url_for, session, request, redirect, flash
 from Application import db
 from Application import ph
