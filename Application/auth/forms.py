@@ -1,6 +1,6 @@
 """ Authentication Blueprint Forms
 
-The following forms are used exclusively within the authentication blueprint. 
+The following forms are used exclusively within the authentication blueprint.
 Two forms are defined below, registration and login.
 
 Registration:
@@ -18,7 +18,7 @@ Login:
 from wtforms import Form, PasswordField, validators, SubmitField, StringField, SelectField
 
 
-class Registration(Form):
+class Registration(Form): # pylint: disable=too-few-public-methods
     """ Define the structure of the registration form
 
     Args:
@@ -28,7 +28,7 @@ class Registration(Form):
         None
 
     Validators:
-        All fields except for name make use of validators to ensure that the entered 
+        All fields except for name make use of validators to ensure that the entered
         data meets a specific requirement if provided.
 
         username - Prompt user to enter a username if none provided
@@ -44,7 +44,8 @@ class Registration(Form):
     password = PasswordField('New Password:', [
         validators.DataRequired(), validators.Length(min=8),
         validators.Regexp(
-            "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[^\W_]{8,}$", message="All passwords should contain a lowercase, an uppercase and a number"),
+            "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[^\W_]{8,}$", 
+            message="All passwords should contain a lowercase, an uppercase and a number"),
         validators.EqualTo('confirm', message='Passwords must match')
     ])
     confirm = PasswordField('Repeat Password:')
@@ -53,7 +54,7 @@ class Registration(Form):
     submit = SubmitField("Submit")
 
 
-class Login(Form):
+class Login(Form): # pylint: disable=too-few-public-methods
     """ Defines the form used for user login
 
     Args:
